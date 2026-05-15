@@ -1,3 +1,5 @@
+"use client";
+
 import s from "./Button.module.css";
 
 type PropsType = {
