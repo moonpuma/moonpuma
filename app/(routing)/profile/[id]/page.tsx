@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
-import { ProfilePage } from "@pages/profile";
-import { MOCK_SESSION } from "@shared/session";
+import { ProfilePage } from "@/pages/profile";
+import { MOCK_SESSION } from "@/shared/session";
 
 export default async function Page({
   params,

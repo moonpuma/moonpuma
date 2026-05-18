@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
-import { SettingsPage, VALID_PARTS } from "@pages/settings";
-import type { Part } from "@pages/settings";
+import { SettingsPage, VALID_PARTS } from "@/pages/settings";
+import type { Part } from "@/pages/settings";
 
 export default async function Page({
   searchParams,
