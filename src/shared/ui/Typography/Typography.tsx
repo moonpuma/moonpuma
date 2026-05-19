@@ -1,6 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
-import s from './Typography.module.css';
+import s from './Typography.module.scss';
+import clsx from 'clsx';
+
 
 export type TypographyVariant =
 
@@ -35,7 +37,7 @@ export const Typography = ({
                                className = '',
                                href,
                            }: TypographyProps) => {
-    const combinedClassName = `${s[variant]} ${className}`.trim();
+    const combinedClassName = clsx(s[variant], className);
 
     if (variant === 'regular_link' || variant === 'small_link') {
         return (
@@ -45,7 +47,7 @@ export const Typography = ({
         );
     }
 
-    const tags: Record<string, keyof React.JSX.IntrinsicElements> = {
+    const tags: Record<TypographyVariant, keyof React.JSX.IntrinsicElements> = {
         large: 'h1',
         h1: 'h1',
         h2: 'h2',
@@ -57,6 +59,8 @@ export const Typography = ({
         bold_text_14: 'p',
         small_text: 'span',
         semi_bold_small_text: 'span',
+        regular_link: 'a',
+        small_link: 'a',
     };
 
     const Component = tags[variant] || 'p';
