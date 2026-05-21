@@ -1,0 +1,123 @@
+/* Стили для страниц */
+
+.paginationWrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #0D0D0D;
+}
+
+.pagesWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 2px;
+    margin: 0 5px;
+    color: white;
+    background: transparent;
+    border: none;
+    font-size: 14px;
+}
+
+.btn:hover, .btn:active {
+    cursor: pointer;
+    background-color: white;
+    color: #0D0D0D;
+}
+
+.btn:focus-visible {
+    outline: 2px solid #2F68CC;
+}
+
+/* Стили для Select */
+
+.selectWrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.selectLabel {
+    font-size: 14px;
+    color: white;
+}
+
+.selectContainer {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.select {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    background-color: #171717;
+    border: 1px solid #333333;
+    padding: 6px 8px 6px 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+    cursor: pointer;
+    border-radius: 2px;
+    min-width: 70px;
+}
+
+.selectOpen {
+    border-radius: 2px 2px 0 0;
+}
+
+.select:focus {
+    outline: none;
+    background-color: #171717;
+}
+
+/* Стрелка */
+.customArrow {
+    font-size: 12px;
+    color: #6b7280;
+    line-height: 1;
+    pointer-events: none;
+}
+
+/* Выпадающий список */
+.optionsList {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #171717;
+    border: 1px solid #333333;
+    border-top: none;
+    border-radius: 0 0 2px 2px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    z-index: 10;
+    overflow: hidden;
+}
+
+.option {
+    padding: 6px 8px;
+    font-size: 14px;
+    color: white;
+    cursor: pointer;
+}
+
+.option:hover {
+    background-color: #4C4C4C;
+}
+
+.option.selected {
+    background-color: #333333;
+}
