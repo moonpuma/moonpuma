@@ -7,18 +7,18 @@
     border-radius: 2px;
     padding: 0 16px;
     box-sizing: border-box;
-}
 
-/* primary — успех (зелёный) */
-.primary {
-    border: 1px solid #14CC70;
-    background-color: #0A6638;
-}
+    // primary — успех (зелёный)
+    &.primary {
+        border: 1px solid #14CC70;
+        background-color: #0A6638;
+    }
 
-/* secondary — ошибка (красный) */
-.secondary {
-    border: 1px solid #CC1439;
-    background-color: #660A1D;
+    // secondary — ошибка (красный)
+    &.secondary {
+      border: 1px solid #CC1439;
+      background-color: #660A1D;
+    }
 }
 
 .text {
@@ -37,13 +37,13 @@
     margin-left: 12px;
     opacity: 0.8;
     transition: opacity 0.2s;
-}
 
-.btn:hover {
-    opacity: 1;
-}
+    &:hover {
+        opacity: 1;
+    }
 
-.btn:focus-visible {
-    outline: 2px solid white;
-    outline-offset: 2px;
+    &:focus-visible {
+        outline: 2px solid white;
+        outline-offset: 2px;
+    }
 }

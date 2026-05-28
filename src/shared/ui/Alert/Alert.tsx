@@ -1,4 +1,4 @@
-import s from "./Alert.module.css"
+import s from "./alert.module.scss"
 
 type Props = {
     isError: boolean
