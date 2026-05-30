@@ -1,4 +1,3 @@
-// Input.stories.tsx
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Input } from './Input';
 
@@ -23,7 +22,6 @@ const meta: Meta<typeof Input> = {
 export default meta;
 type Story = StoryObj<typeof Input>;
 
-// Текст-инпут по умолчанию
 export const Default: Story = {
     args: {
         title: 'Email',
@@ -32,7 +30,6 @@ export const Default: Story = {
     },
 };
 
-// Пароль с переключателем видимости
 export const Password: Story = {
     args: {
         title: 'Пароль',
@@ -42,7 +39,6 @@ export const Password: Story = {
     },
 };
 
-// С ошибкой
 export const WithError: Story = {
     args: {
         title: 'Email',
@@ -52,7 +48,6 @@ export const WithError: Story = {
     },
 };
 
-// Пароль с ошибкой
 export const PasswordWithError: Story = {
     args: {
         title: 'Пароль',
@@ -63,7 +58,6 @@ export const PasswordWithError: Story = {
     },
 };
 
-// Пароль без переключателя видимости
 export const PasswordWithoutToggle: Story = {
     args: {
         title: 'Пароль',
@@ -73,7 +67,6 @@ export const PasswordWithoutToggle: Story = {
     },
 };
 
-// Все варианты в одном месте
 export const AllVariants: Story = {
     render: () => (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '400px' }}>
