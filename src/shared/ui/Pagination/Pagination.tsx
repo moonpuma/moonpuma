@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react';
-import s from './pagination.module.css';
+import s from './pagination.module.scss';
 
 export const Pagination = () => {
 

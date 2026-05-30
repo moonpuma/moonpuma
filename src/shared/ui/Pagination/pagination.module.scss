@@ -1,5 +1,3 @@
-/* Стили для страниц */
-
 .paginationWrapper {
     width: 100%;
     display: flex;
@@ -26,19 +24,18 @@
     background: transparent;
     border: none;
     font-size: 14px;
-}
 
-.btn:hover, .btn:active {
-    cursor: pointer;
-    background-color: white;
-    color: #0D0D0D;
-}
+    &:hover,
+    &:active {
+        cursor: pointer;
+        background-color: white;
+        color: #0D0D0D;
+    }
 
-.btn:focus-visible {
-    outline: 2px solid #2F68CC;
+    &:focus-visible {
+        outline: 2px solid #2F68CC;
+    }
 }
-
-/* Стили для Select */
 
 .selectWrapper {
     display: flex;
@@ -64,25 +61,24 @@
     gap: 8px;
     background-color: #171717;
     border: 1px solid #333333;
-    padding: 6px 8px 6px 8px;
+    padding: 6px 8px;
     font-size: 14px;
     font-weight: 500;
     color: white;
     cursor: pointer;
     border-radius: 2px;
     min-width: 70px;
+
+    &:focus {
+        outline: none;
+        background-color: #171717;
+    }
 }
 
 .selectOpen {
     border-radius: 2px 2px 0 0;
 }
 
-.select:focus {
-    outline: none;
-    background-color: #171717;
-}
-
-/* Стрелка */
 .customArrow {
     font-size: 12px;
     color: #6b7280;
@@ -90,7 +86,6 @@
     pointer-events: none;
 }
 
-/* Выпадающий список */
 .optionsList {
     position: absolute;
     top: 100%;
@@ -112,12 +107,12 @@
     font-size: 14px;
     color: white;
     cursor: pointer;
-}
 
-.option:hover {
-    background-color: #4C4C4C;
-}
+    &:hover {
+        background-color: #4C4C4C;
+    }
 
-.option.selected {
-    background-color: #333333;
+    &.selected {
+        background-color: #333333;
+    }
 }
