@@ -22,25 +22,25 @@
     background-color: transparent;
     border: 1px solid #4C4C4C;
     border-radius: 2px;
-    padding: 0 12px 0 36px;
+    padding: 0 36px 0 12px;
     box-sizing: border-box;
     color: #8D9094;
     font-size: 16px;
     font-weight: 400;
     outline: none;
-}
 
-.input:focus {
-    border-color: #397DF6;
-}
+    &:focus {
+        border-color: #397DF6;
+    }
 
-.input:active {
-    border-color: #FFFFFF;
-    color: #FFFFFF;
-}
+    &:active {
+        border-color: #FFFFFF;
+        color: #FFFFFF;
+    }
 
-.inputError {
-    border-color: #FF3B30 !important;
+    &.inputError {
+        border-color: #FF3B30 !important;
+    }
 }
 
 .errorText {
@@ -48,9 +48,9 @@
     font-size: 14px;
 }
 
-.searchButton {
+.eyeButton {
     position: absolute;
-    left: 12px;
+    right: 12px;
     top: 50%;
     transform: translateY(-50%);
     background: transparent;
@@ -62,8 +62,10 @@
     justify-content: center;
     width: 20px;
     height: 20px;
-}
 
-.searchButton:hover svg path {
-    stroke: #FFFFFF;
+    &:hover {
+        svg path {
+            stroke: #FFFFFF;
+        }
+    }
 }

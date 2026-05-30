@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import s from './Input.module.css';
+import s from './Input.module.scss';
 
 type Props = {
     title: string;

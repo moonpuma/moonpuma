@@ -1,4 +1,4 @@
-import s from "./SearchInput.module.css"
+import s from "./SearchInput.module.scss"
 
 type Props = {
     placeholder?: string;
