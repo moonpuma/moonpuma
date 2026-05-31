@@ -3,17 +3,3 @@ allowBuilds:
   esbuild: false
   sharp: true
   unrs-resolver: true
-
-ignoredBuiltDependencies:
-  - sharp
-  - unrs-resolver
-
-onlyBuiltDependencies:
-  - b
-  - d
-  - e
-  - esbuild
-  - i
-  - l
-  - s
-  - u

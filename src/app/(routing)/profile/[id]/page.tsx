@@ -1,22 +1,22 @@
-import { redirect } from 'next/navigation';
-import { ProfilePage } from "@/pages/profile";
-import { MOCK_SESSION } from "@/shared/session";
+import { redirect } from 'next/navigation'
+import { ProfilePage } from '@/views/profile'
+import { MOCK_SESSION } from '@/shared/session'
 
 export default async function Page({
   params,
   searchParams,
 }: {
-  params: Promise<{ id: string }>;
-  searchParams: Promise<{ postId?: string; action?: string }>;
+  params: Promise<{ id: string }>
+  searchParams: Promise<{ postId?: string; action?: string }>
 }) {
-  const { id } = await params;
-  const { postId, action } = await searchParams;
+  const { id } = await params
+  const { postId, action } = await searchParams
 
   if (postId && action) {
-    redirect(`/profile/${id}?postId=${postId}`);
+    redirect(`/profile/${id}?postId=${postId}`)
   }
 
-  const isOwnProfile = id === MOCK_SESSION.userId;
+  const isOwnProfile = id === MOCK_SESSION.userId
 
   return (
     <ProfilePage
@@ -25,5 +25,5 @@ export default async function Page({
       postId={postId}
       action={action === 'create' ? 'create' : undefined}
     />
-  );
+  )
 }

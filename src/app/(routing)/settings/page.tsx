@@ -1,17 +1,13 @@
-import { redirect } from 'next/navigation';
-import { SettingsPage, VALID_PARTS } from "@/pages/settings";
-import type { Part } from "@/pages/settings";
+import { redirect } from 'next/navigation'
+import { SettingsPage, VALID_PARTS } from '@/views/settings'
+import type { Part } from '@/views/settings'
 
-export default async function Page({
-  searchParams,
-}: {
-  searchParams: Promise<{ part?: string }>;
-}) {
-  const { part } = await searchParams;
+export default async function Page({ searchParams }: { searchParams: Promise<{ part?: string }> }) {
+  const { part } = await searchParams
 
   if (!part || !VALID_PARTS.includes(part as Part)) {
-    redirect('/settings?part=info');
+    redirect('/settings?part=info')
   }
 
-  return <SettingsPage part={part as Part} />;
+  return <SettingsPage part={part as Part} />
 }
