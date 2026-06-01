@@ -1,0 +1,105 @@
+.radioGroupWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.radioLabelContainer {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+
+  --local-ripple-hover: var(--radio-hover-bg, rgba(76, 76, 76, 0.4));
+  --local-ripple-active: var(--radio-active-bg, rgba(76, 76, 76, 0.7));
+
+  // --- СОСТОЯНИЕ HOVER (Наведение) ---
+  &:hover .customRadioCircle {
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 36px; // Размер большого круга свечения по макету
+      height: 36px;
+      background-color: var(--local-ripple-hover);
+      border-radius: 50%;
+      z-index: 0;
+    }
+  }
+
+  // --- СОСТОЯНИЕ ACTIVE (Клик/Зажатие) ---
+  &:active .customRadioCircle {
+    &::before {
+      background-color: var(--local-ripple-active) !important;
+      width: 36px;
+      height: 36px;
+    }
+  }
+
+  // Состояние Disabled
+  &:has(.nativeRadioInput:disabled) {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: var(--radio-disabled-opacity, 0.35);
+  }
+}
+
+.nativeRadioInput {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+
+  // Когда выбрано (Checked)
+  &:checked + .customRadioCircle {
+    border-color: var(--radio-border-checked, var(--text-primary, #000000));
+
+    &::after {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+
+  &:focus-visible + .customRadioCircle {
+    outline: 2px solid var(--radio-focus-outline, rgba(255, 255, 255, 0.5));
+    outline-offset: 4px;
+  }
+}
+
+.customRadioCircle {
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+  border: 2px solid var(--radio-border-default, #8d8d8d);
+  border-radius: 50%;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease;
+  flex-shrink: 0;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 10px; // Белая точка внутри
+    height: 10px;
+    background-color: var(--radio-mark-color, var(--text-primary, #000000));
+    border-radius: 50%;
+    opacity: 0;
+    transition: transform 0.12s cubic-bezier(0, 0, 0.2, 1), opacity 0.1s ease;
+    z-index: 1;
+  }
+}
+
+.radioLabelText {
+  font-size: 14px;
+  line-height: 1.2;
+  color: var(--radio-text-color, var(--text-primary, #ffffff));
+}
