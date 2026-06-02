@@ -20,6 +20,10 @@
 }
 .errorText {
   color: #cc1439;
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
 }
 .textarea:focus {
   border: 2px solid #2f68cc;
