@@ -1,0 +1,32 @@
+.textarea {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  border-radius: 2px;
+  border: 1px solid #4c4c4c;
+  background-color: #171717;
+  padding: 6px 12px;
+  color: #8d9094;
+  transition: 0.3s ease;
+}
+.textarea:active {
+  color: #ffffff;
+  border-color: #ffffff;
+}
+.error {
+  color: #ffffff;
+  border-color: #cc1439;
+}
+.textarea-message {
+  color: #cc1439;
+}
+.textarea:focus {
+  border: 2px solid #2f68cc;
+  color: #ffffff;
+}
+
+.textarea:disabled {
+  color: #4c4c4c;
+  cursor: not-allowed;
+}
