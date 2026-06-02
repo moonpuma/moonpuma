@@ -1,3 +1,7 @@
+.textareaWrapper {
+  display: flex;
+  flex-direction: column;
+}
 .textarea {
   font-family: 'Inter', sans-serif;
   font-weight: 600;

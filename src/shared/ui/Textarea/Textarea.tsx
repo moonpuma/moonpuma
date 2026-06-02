@@ -10,7 +10,7 @@ type PropsType = {
 
 export const Textarea = ({ className, error, ...restProps }: PropsType) => {
   return (
-    <div className='textarea-wrapper'>
+    <div className={s.textareaWrapper}>
       <textarea className={`${s.textarea} ${error ? s.error : ''} ${className || ''}`} {...restProps} />
       {error && <span className={s.errorText}>{error}</span>}
     </div>
