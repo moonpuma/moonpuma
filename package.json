@@ -48,6 +48,7 @@
     "storybook": "10.4.0",
     "stylelint": "17.11.1",
     "stylelint-config-standard": "40.0.0",
+    "svg-sprite": "^2.0.4",
     "typescript": "5",
     "typescript-eslint": "8.59.3",
     "vite": "8.0.13",
