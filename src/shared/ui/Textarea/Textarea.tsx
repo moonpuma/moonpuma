@@ -5,8 +5,14 @@ import s from './Textarea.module.css'
 
 type PropsType = {
   className?: string
+  error?: string | undefined
 } & TextareaHTMLAttributes<HTMLTextAreaElement>
 
-export const Textarea = ({ className, ...restProps }: PropsType) => {
-  return <textarea className={`${s.textarea} ${className || ''}`} {...restProps}></textarea>
+export const Textarea = ({ className, error, ...restProps }: PropsType) => {
+  return (
+    <>
+      <textarea className={`${s.textarea} ${error ? s.error : ''} ${className || ''}`} {...restProps} />
+      {error && <span className={s.errorText}>{error}</span>}
+    </>
+  )
 }
