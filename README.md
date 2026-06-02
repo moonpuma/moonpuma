@@ -79,8 +79,13 @@ node --version   # должно быть v24.16.0
 pnpm --version   # должно быть 11.4.0
 ```
 
-## Если не удается разобраться с nvm и corepack установите глобально у себя на ПК необходимые версии node.js и pnpm, скачайте заново проект с github и в ветке dev выполните в консоли:
+### Если не удается разобраться с nvm и corepack установите глобально у себя на ПК необходимые версии node.js и pnpm, скачайте заново проект с github и в ветке dev выполните в консоли:
 
 ```bash
 pnpm install
 ```
+
+#### Полезные ссылки:
+
+- https://www.nvmnode.com/guide/introduction.html
+- https://nodejs.org/en/download
