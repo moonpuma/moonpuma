@@ -1,13 +1,7 @@
-import path from 'path'
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
-  sassOptions: {
-    // Next.js передаёт этот путь sass-компилятору как loadPaths.
-    // Файл variables.scss лежит в src/styles, поэтому @use 'variables' ищется там.
-    loadPaths: [path.resolve(__dirname, 'src/styles')],
-  },
   turbopack: {
     root: __dirname,
     // Импорт *.svg отдаём в @svgr/webpack — каждый файл становится React-компонентом.

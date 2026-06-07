@@ -1,5 +1,0 @@
-{
-  "extends": ["stylelint-config-standard-scss"],
-  "rules": {},
-  "customSyntax": "postcss-scss"
-}
