@@ -7,7 +7,7 @@ import {IconProps} from "@shared/ui/icon/types";
  *
  * @example
  * import HomeIcon from '@/shared/ui/icons/common/home.svg'
- * <Icon name={HomeIcon} size={24} color='var(--text-primary)' />
+ * <Icon name={HomeIcon} size={24} color='var(--text-primary)'/>
  */
 export const Icon: React.FC<IconProps> = ({ name: IconSvg, size = 24, color, style, ...rest }) => {
   return (
