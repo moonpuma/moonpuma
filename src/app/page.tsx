@@ -8,7 +8,7 @@ export default function HomePage() {
     <div>
       <h1 className={s.title}>Homepage</h1>
       <span>Компоненты ниже по коду просто для теста чтобы посмотреть как отрабатывают</span>
-      <Icon icon={HomeIcon} size={24} className='white-icon' />
+      <Icon name={HomeIcon} size={24} color='var(--status-danger)' />
       <Checkbox />
     </div>
   )
