@@ -1,0 +1,22 @@
+.card {
+  width: 100%;
+  background-color: var(--bg-elevated, #171717);
+  border: 1px solid var(--border-default, #333333);
+  border-radius: 2px;
+  color: var(--text-primary, #ffffff);
+  padding: 24px;
+}
+
+.default {
+  background-color: var(--bg-elevated, #171717);
+}
+
+.elevated {
+  background-color: var(--bg-surface, #0d0d0d);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 24%);
+}
+
+.outlined {
+  background-color: transparent;
+  border-color: var(--brand-default, #397df6);
+}
