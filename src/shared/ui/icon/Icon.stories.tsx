@@ -11,7 +11,7 @@ const meta: Meta<typeof Icon> = {
   component: Icon,
   tags: ['autodocs'],
   args: {
-    name: HomeIcon,
+    icon: HomeIcon,
     size: 24,
   },
   argTypes: {
@@ -29,7 +29,7 @@ export const Default: Story = {}
 // Моно-иконка наследует цвет через currentColor.
 export const Colored: Story = {
   args: {
-    name: HeartIcon,
+    icon: HeartIcon,
     size: 32,
     color: 'var(--text-primary)',
   },
@@ -38,10 +38,10 @@ export const Colored: Story = {
 export const Sizes: Story = {
   render: () => (
     <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-      <Icon name={BellIcon} size={16} color='var(--text-primary)' />
-      <Icon name={BellIcon} size={24} color='var(--text-primary)' />
-      <Icon name={BellIcon} size={32} color='var(--text-primary)' />
-      <Icon name={BellIcon} size={48} color='var(--text-primary)' />
+      <Icon icon={BellIcon} size={16} color='var(--text-primary)' />
+      <Icon icon={BellIcon} size={24} color='var(--text-primary)' />
+      <Icon icon={BellIcon} size={32} color='var(--text-primary)' />
+      <Icon icon={BellIcon} size={48} color='var(--text-primary)' />
     </div>
   ),
 }
@@ -50,8 +50,8 @@ export const Sizes: Story = {
 export const Brand: Story = {
   render: () => (
     <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-      <Icon name={GoogleIcon} size={32} />
-      <Icon name={GithubIcon} size={32} color='var(--text-primary)' />
+      <Icon icon={GoogleIcon} size={32} />
+      <Icon icon={GithubIcon} size={32} color='var(--text-primary)' />
     </div>
   ),
 }
