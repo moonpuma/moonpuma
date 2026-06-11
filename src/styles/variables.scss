@@ -70,4 +70,10 @@
   --status-success: var(--color-success-500);
   --status-warning: var(--color-warning-500);
   --status-danger: var(--color-danger-500);
+
+  // Fields
+  --field-border: var(--color-dark-100);
+  --field-border-hover: var(--color-light-900);
+  --field-border-focus: var(--color-accent-500);
+  --field-error: var(--color-danger-500);
 }

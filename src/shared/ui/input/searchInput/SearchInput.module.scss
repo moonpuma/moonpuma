@@ -14,7 +14,7 @@
     height: 36px;
     width: 100%;
     background-color: transparent;
-    border: 1px solid var(--border-default);
+    border: 1px solid var(--field-border);
     border-radius: 2px;
     padding: 0 12px 0 36px;
     box-sizing: border-box;
@@ -33,16 +33,16 @@
     }
 
     &:hover:not(:disabled) {
-        border-color: var(--text-secondary);
+        border-color: var(--field-border-hover);
     }
 
     &:focus {
-        border-color: var(--brand-default);
+        border-color: var(--field-border-focus);
         color: var(--text-primary);
     }
 
     &.inputError {
-        border-color: var(--status-danger);
+        border-color: var(--field-error);
     }
 
     &:disabled {
@@ -52,7 +52,7 @@
 }
 
 .errorText {
-    color: var(--status-danger);
+    color: var(--field-error);
     font-size: 14px;
 }
 
