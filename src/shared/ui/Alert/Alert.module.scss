@@ -1,49 +1,51 @@
 .alertWrapper {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 380px;
-    height: 48px;
-    border-radius: 2px;
-    padding: 0 16px;
-    box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 380px;
+  height: 48px;
+  border-radius: 2px;
+  padding: 0 16px;
+  box-sizing: border-box;
 
-    // primary — успех (зелёный)
-    &.primary {
-        border: 1px solid #14CC70;
-        background-color: #0A6638;
-    }
+  // success — успех (зелёный)
+  &.success {
+    border: 1px solid var(--status-success);
+    background-color: var(--status-success-bg);
+  }
 
-    // secondary — ошибка (красный)
-    &.secondary {
-      border: 1px solid #CC1439;
-      background-color: #660A1D;
-    }
+  // error — ошибка (красный)
+  &.error {
+    border: 1px solid var(--status-danger);
+    background-color: var(--status-danger-bg);
+  }
 }
 
 .text {
-    color: white;
-    font-size: 16px;
+  color: var(--text-primary);
+  font-size: 16px;
 }
 
 .btn {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 18px;
-    line-height: 1;
-    cursor: pointer;
-    padding: 4px;
-    margin-left: 12px;
-    opacity: 0.8;
-    transition: opacity 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px;
+  margin-left: 12px;
+  opacity: 0.8;
+  transition: opacity 0.2s;
 
-    &:hover {
-        opacity: 1;
-    }
+  &:hover {
+    opacity: 1;
+  }
 
-    &:focus-visible {
-        outline: 2px solid white;
-        outline-offset: 2px;
-    }
+  &:focus-visible {
+    outline: 2px solid var(--text-primary);
+    outline-offset: 2px;
+  }
 }
