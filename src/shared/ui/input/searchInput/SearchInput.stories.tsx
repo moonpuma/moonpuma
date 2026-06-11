@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { SearchInput } from './SearchInput';
 
 const meta: Meta<typeof SearchInput> = {
-    title: 'Components/SearchInput',
+    title: 'Shared/SearchInput',
     component: SearchInput,
     tags: ['autodocs'],
     argTypes: {
@@ -12,6 +12,9 @@ const meta: Meta<typeof SearchInput> = {
         error: {
             control: 'text',
         },
+        disabled: {
+            control: 'boolean',
+        },
     },
 };
 
@@ -20,19 +23,20 @@ type Story = StoryObj<typeof SearchInput>;
 
 export const Default: Story = {
     args: {
-        placeholder: 'Поиск...',
+        placeholder: 'Input search',
     },
 };
 
 export const WithError: Story = {
     args: {
-        placeholder: 'Поиск...',
-        error: 'Введите поисковый запрос',
+        placeholder: 'Input search',
+        error: 'Error text',
     },
 };
 
-export const CustomPlaceholder: Story = {
+export const Disabled: Story = {
     args: {
-        placeholder: 'Найти товар или категорию',
+        placeholder: 'Input search',
+        disabled: true,
     },
 };

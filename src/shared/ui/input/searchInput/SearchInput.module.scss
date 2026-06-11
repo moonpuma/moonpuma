@@ -1,0 +1,71 @@
+.inputWrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.inputContainer {
+    position: relative;
+    width: 100%;
+}
+
+.input {
+    height: 36px;
+    width: 100%;
+    background-color: transparent;
+    border: 1px solid var(--border-default);
+    border-radius: 2px;
+    padding: 0 12px 0 36px;
+    box-sizing: border-box;
+    color: var(--text-secondary);
+    font-size: 16px;
+    font-weight: 400;
+    outline: none;
+    transition: border-color 0.15s ease, color 0.15s ease;
+
+    &::placeholder {
+        color: var(--text-secondary);
+    }
+
+    &:not(:placeholder-shown) {
+        color: var(--text-primary);
+    }
+
+    &:hover:not(:disabled) {
+        border-color: var(--text-secondary);
+    }
+
+    &:focus {
+        border-color: var(--brand-default);
+        color: var(--text-primary);
+    }
+
+    &.inputError {
+        border-color: var(--status-danger);
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+.errorText {
+    color: var(--status-danger);
+    font-size: 14px;
+}
+
+.searchIcon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    color: var(--text-secondary);
+    pointer-events: none;
+}

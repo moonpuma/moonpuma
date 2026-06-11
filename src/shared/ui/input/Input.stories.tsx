@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Input } from './Input';
 
 const meta: Meta<typeof Input> = {
-    title: 'Components/Input',
+    title: 'Shared/Input',
     component: Input,
     tags: ['autodocs'],
     argTypes: {
@@ -16,6 +16,9 @@ const meta: Meta<typeof Input> = {
         showPasswordToggle: {
             control: 'boolean',
         },
+        disabled: {
+            control: 'boolean',
+        },
     },
 };
 
@@ -24,15 +27,15 @@ type Story = StoryObj<typeof Input>;
 
 export const Default: Story = {
     args: {
-        title: 'Email',
+        label: 'Email',
         type: 'text',
-        placeholder: 'Введите email',
+        placeholder: 'Epam@epam.com',
     },
 };
 
 export const Password: Story = {
     args: {
-        title: 'Пароль',
+        label: 'Пароль',
         type: 'password',
         placeholder: 'Введите пароль',
         showPasswordToggle: true,
@@ -41,16 +44,16 @@ export const Password: Story = {
 
 export const WithError: Story = {
     args: {
-        title: 'Email',
+        label: 'Email',
         type: 'text',
-        placeholder: 'Введите email',
-        error: 'Некорректный email',
+        placeholder: 'Epam@epam.com',
+        error: 'Error text',
     },
 };
 
 export const PasswordWithError: Story = {
     args: {
-        title: 'Пароль',
+        label: 'Пароль',
         type: 'password',
         placeholder: 'Введите пароль',
         showPasswordToggle: true,
@@ -58,42 +61,29 @@ export const PasswordWithError: Story = {
     },
 };
 
-export const PasswordWithoutToggle: Story = {
+export const Disabled: Story = {
     args: {
-        title: 'Пароль',
-        type: 'password',
-        placeholder: 'Введите пароль',
-        showPasswordToggle: false,
+        label: 'Email',
+        type: 'text',
+        placeholder: 'Epam@epam.com',
+        disabled: true,
     },
 };
 
 export const AllVariants: Story = {
     render: () => (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '400px' }}>
+            <Input label="Email" type="text" placeholder="Epam@epam.com" />
+            <Input label="Email с ошибкой" type="text" placeholder="Epam@epam.com" error="Error text" />
+            <Input label="Пароль" type="password" placeholder="Введите пароль" showPasswordToggle />
             <Input
-                title="Email"
-                type="text"
-                placeholder="Введите email"
-            />
-            <Input
-                title="Email с ошибкой"
-                type="text"
-                placeholder="Введите email"
-                error="Некорректный email"
-            />
-            <Input
-                title="Пароль"
-                type="password"
-                placeholder="Введите пароль"
-                showPasswordToggle
-            />
-            <Input
-                title="Пароль с ошибкой"
+                label="Пароль с ошибкой"
                 type="password"
                 placeholder="Введите пароль"
                 showPasswordToggle
                 error="Пароль слишком короткий"
             />
+            <Input label="Disabled" type="text" placeholder="Epam@epam.com" disabled />
         </div>
     ),
 };

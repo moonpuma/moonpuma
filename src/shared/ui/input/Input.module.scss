@@ -1,0 +1,97 @@
+.inputWrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.label {
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.inputContainer {
+    position: relative;
+    width: 100%;
+}
+
+.input {
+    height: 36px;
+    width: 100%;
+    background-color: transparent;
+    border: 1px solid var(--border-default);
+    border-radius: 2px;
+    padding: 0 12px;
+    box-sizing: border-box;
+    color: var(--text-secondary);
+    font-size: 16px;
+    font-weight: 400;
+    outline: none;
+    transition: border-color 0.15s ease, color 0.15s ease;
+
+    &::placeholder {
+        color: var(--text-secondary);
+    }
+
+    // Поле с введённым текстом — основной цвет текста (состояние «Active» в макете).
+    &:not(:placeholder-shown) {
+        color: var(--text-primary);
+    }
+
+    &:hover:not(:disabled) {
+        border-color: var(--text-secondary);
+    }
+
+    &:focus {
+        border-color: var(--brand-default);
+        color: var(--text-primary);
+    }
+
+    // Дополнительный отступ справа под кнопку-«глаз».
+    &.withToggle {
+        padding-right: 40px;
+    }
+
+    // Ошибка идёт последней, чтобы перекрывать рамку hover/focus.
+    &.inputError {
+        border-color: var(--status-danger);
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+.errorText {
+    color: var(--status-danger);
+    font-size: 14px;
+}
+
+.eyeButton {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: color 0.15s ease;
+
+    &:hover {
+        color: var(--text-primary);
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+}
