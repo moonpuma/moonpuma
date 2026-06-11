@@ -1,10 +1,10 @@
-import type { ComponentProps } from 'react';
+import type { ComponentPropsWithoutRef } from 'react';
 import clsx from 'clsx';
 import { Icon } from '@shared/ui/icon';
 import CloseIcon from '@shared/ui/icon/icons/common/close.svg';
 import s from './Alert.module.scss';
 
-interface AlertProps extends ComponentProps<'div'> {
+interface AlertProps extends ComponentPropsWithoutRef<'div'> {
     message: string;
     isError?: boolean;
     onClose?: () => void;
