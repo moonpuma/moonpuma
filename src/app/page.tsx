@@ -2,6 +2,7 @@ import { Icon } from '@/shared/ui/icon'
 import { Checkbox } from '@/shared/ui/checkbox'
 import HomeIcon from '@/shared/ui/icon/icons/common/home.svg'
 import s from './page.module.scss'
+import {Input} from "@shared/ui/input";
 
 export default function HomePage() {
   return (
@@ -10,6 +11,8 @@ export default function HomePage() {
       <span>Компоненты ниже по коду просто для теста чтобы посмотреть как отрабатывают</span>
       <Icon icon={HomeIcon} size={24} color='var(--status-danger)' />
       <Checkbox />
+        <Input label={'Email'} type={'email'}/>
+        <Input label={'Password'} type={'password'} showPasswordToggle error={'Too long password'}/>
     </div>
   )
 }
