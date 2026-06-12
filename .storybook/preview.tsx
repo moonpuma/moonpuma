@@ -1,4 +1,8 @@
 import type { Preview } from '@storybook/nextjs-vite'
+// Подключаем глобальные стили приложения: они объявляют дизайн-токены на :root
+// (через variables.scss) и базовые сбросы, чтобы компоненты в Storybook
+// выглядели так же, как в приложении.
+import '../src/app/globals.scss'
 
 const preview: Preview = {
   parameters: {
@@ -16,6 +20,15 @@ const preview: Preview = {
       test: 'todo',
     },
   },
+
+  // Рисуем каждую историю на фоне приложения (--bg-base), как на реальной странице.
+  decorators: [
+    (Story) => (
+      <div style={{ background: 'var(--bg-base)', minHeight: '100vh', padding: '1rem' }}>
+        <Story />
+      </div>
+    ),
+  ],
 }
 
 export default preview

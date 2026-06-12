@@ -5,7 +5,7 @@ import RuFlag from '@/shared/ui/icon/icons/locale/flag-russia.svg';
 import UkFlag from '@/shared/ui/icon/icons/locale/flag-united-kingdom.svg';
 
 const meta: Meta<typeof Select> = {
-    title: 'shared/Select',
+    title: 'Components/Select',
     component: Select,
     parameters: {
         layout: 'centered',

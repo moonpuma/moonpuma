@@ -61,6 +61,13 @@
   --border-default: var(--color-dark-300);
   --border-subtle: var(--color-dark-500);
 
+  // Form fields
+  --field-border: var(--color-dark-100);
+  --field-border-active: var(--color-light-100);
+  --field-border-hover: var(--color-light-900);
+  --field-border-focus: var(--color-accent-500);
+  --field-error: var(--color-danger-500);
+
   // Brand / interactive
   --brand-default: var(--color-accent-500);
   --brand-hover: var(--color-accent-300);

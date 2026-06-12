@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { Typography, TypographyVariant } from './Typography'
 
 const meta: Meta<typeof Typography> = {
-  title: 'Components/typography',
+  title: 'Components/Typography',
   component: Typography,
   tags: ['autodocs'],
   argTypes: {

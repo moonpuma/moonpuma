@@ -12,7 +12,7 @@ interface CustomCSSProperties extends CSSProperties {
 }
 
 const meta: Meta<typeof RadioGroup> = {
-  title: 'Shared/radioGroup',
+  title: 'Components/RadioGroup',
   component: RadioGroup,
   tags: ['autodocs'],
 }
