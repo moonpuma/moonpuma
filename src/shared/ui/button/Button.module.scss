@@ -1,0 +1,64 @@
+.button {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    border-radius: 2px;
+    padding: 6px 24px;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, opacity 0.15s ease;
+
+    &:focus-visible {
+        outline: 2px solid var(--brand-default);
+        outline-offset: 2px;
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+// filled — основная кнопка
+.filled {
+    color: var(--text-primary);
+    background-color: var(--brand-default);
+    border: 1px solid transparent;
+
+    &:hover:not(:disabled) {
+        background-color: var(--brand-hover);
+    }
+
+    &:active:not(:disabled) {
+        background-color: var(--brand-active);
+    }
+}
+
+// outlined — второстепенная кнопка с рамкой
+.outlined {
+    color: var(--text-brand);
+    background-color: transparent;
+    border: 1px solid var(--brand-default);
+
+    &:hover:not(:disabled) {
+        color: var(--brand-hover);
+        border-color: var(--brand-hover);
+    }
+
+    &:active:not(:disabled) {
+        color: var(--brand-active);
+        border-color: var(--brand-active);
+    }
+}
+
+// secondary — нейтральная кнопка
+.secondary {
+    color: var(--text-primary);
+    background-color: var(--bg-overlay);
+    border: 1px solid transparent;
+
+    &:hover:not(:disabled) {
+        background-color: var(--bg-elevated);
+    }
+}

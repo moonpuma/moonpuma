@@ -1,32 +1,20 @@
-"use client";
+import type { ComponentPropsWithoutRef } from 'react'
+import clsx from 'clsx'
+import s from './Button.module.scss'
 
-import { ButtonHTMLAttributes } from "react";
-import s from "./Button.module.css";
+type ButtonVariant = 'filled' | 'outlined' | 'secondary'
 
-type PropsType = {
-  className?: string;
-  disabled?: boolean;
-  title: string;
-  variant?: "filled" | "outlined" | "secondary";
-  onClick: () => void;
-} & ButtonHTMLAttributes<HTMLButtonElement>;
+interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
+    /** Текст кнопки. */
+    title: string
+    /** Визуальный вариант кнопки. */
+    variant?: ButtonVariant
+}
 
-export const Button = ({
-  className,
-  disabled,
-  title,
-  variant = "filled",
-  onClick,
-  ...restProps
-}: PropsType) => {
-  return (
-    <button
-      className={`${s.button} ${s[variant]} ${className || ""}`}
-      onClick={onClick}
-      disabled={disabled}
-      {...restProps}
-    >
-      {title}
-    </button>
-  );
-};
+export const Button = ({ title, variant = 'filled', type = 'button', className, ...restProps }: ButtonProps) => {
+    return (
+        <button type={type} className={clsx(s.button, s[variant], className)} {...restProps}>
+            {title}
+        </button>
+    )
+}
