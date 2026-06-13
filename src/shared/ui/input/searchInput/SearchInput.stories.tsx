@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { SearchInput } from './SearchInput';
 
 const meta: Meta<typeof SearchInput> = {
-    title: 'Shared/SearchInput',
+    title: 'Components/SearchInput',
     component: SearchInput,
     tags: ['autodocs'],
     argTypes: {

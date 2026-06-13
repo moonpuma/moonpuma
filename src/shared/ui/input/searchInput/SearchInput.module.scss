@@ -28,7 +28,9 @@
         color: var(--text-secondary);
     }
 
+    // Заполненное поле — граница совпадает по цвету с текстом.
     &:not(:placeholder-shown) {
+        border-color: var(--field-border-active);
         color: var(--text-primary);
     }
 

@@ -35,7 +35,9 @@
     }
 
     // Поле с введённым текстом — основной цвет текста (состояние «Active» в макете).
+    // Граница в этом состоянии совпадает по цвету с текстом.
     &:not(:placeholder-shown) {
+        border-color: var(--field-border-active);
         color: var(--text-primary);
     }
 

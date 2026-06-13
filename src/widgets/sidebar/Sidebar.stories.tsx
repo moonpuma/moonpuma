@@ -4,7 +4,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { defaultSidebarItems, Sidebar, type SidebarItemState } from './Sidebar'
 
 const meta: Meta<typeof Sidebar> = {
-  title: 'Shared/Sidebar',
+  title: 'Widgets/Sidebar',
   component: Sidebar,
   tags: ['autodocs'],
   argTypes: {

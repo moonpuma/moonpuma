@@ -7,7 +7,7 @@ import GoogleIcon from './icons/social/google.svg'
 import GithubIcon from './icons/social/github.svg'
 
 const meta: Meta<typeof Icon> = {
-  title: 'Components/icon',
+  title: 'Components/Icon',
   component: Icon,
   tags: ['autodocs'],
   args: {

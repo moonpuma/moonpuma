@@ -11,7 +11,7 @@ interface CustomCSSProperties extends CSSProperties {
 }
 
 const meta: Meta<typeof Checkbox> = {
-    title: 'Shared/Checkbox',
+    title: 'Components/Checkbox',
     component: Checkbox,
     tags: ['autodocs'],
     argTypes: {
