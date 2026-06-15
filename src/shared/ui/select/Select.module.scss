@@ -12,6 +12,18 @@
   color: var(--text-secondary);
 }
 
+// Компактный инлайн-вариант (Pagination): ширина по контенту, ниже триггер.
+.sm {
+  width: auto;
+
+  .trigger {
+    height: 36px;
+    min-width: 72px;
+    padding: 0 8px;
+    gap: 6px;
+  }
+}
+
 .trigger {
   all: unset;
   display: flex;

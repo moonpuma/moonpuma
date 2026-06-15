@@ -51,12 +51,14 @@
   --bg-elevated: var(--color-dark-500); // inputs, cards, dialogs
   --bg-overlay: var(--color-dark-300); // hover, overlays
   --bg-overlay-hover: var(--color-dark-100); // hover для нейтральных поверхностей (secondary button)
+  --bg-inverted: var(--color-light-100); // светлая поверхность на тёмной теме (активная страница пагинации)
 
   // Text
   --text-primary: var(--color-light-100);
   --text-secondary: var(--color-light-900); // muted / inactive labels
   --text-disabled: var(--color-dark-100);
   --text-brand: var(--color-accent-500); // active nav, links
+  --text-inverted: var(--color-dark-700); // текст на светлой (инвертированной) поверхности
 
   // Borders
   --border-default: var(--color-dark-300);
