@@ -20,7 +20,7 @@
     width: 100%;
     min-height: 80px;
     background-color: var(--bg-elevated);
-    border: 1px solid var(--color-dark-100); // Default — серая рамка #4c4c4c.
+    border: 1px solid var(--field-border); // Default — серая рамка #4c4c4c.
     border-radius: 2px;
     padding: 6px 12px;
     box-sizing: border-box;
@@ -38,42 +38,37 @@
     }
 
     // Hover — рамка светлее (поле ещё пустое).
-    &:hover {
-        border-color: var(--text-secondary);
+    &:hover:not(:disabled) {
+        border-color: var(--field-border-hover);
     }
 
     // Active — заполненное поле: белая рамка и белый текст.
     &:not(:placeholder-shown) {
-        border-color: var(--text-primary);
+        border-color: var(--field-border-active);
         color: var(--text-primary);
     }
 
     // Focus — синяя рамка.
     &:focus {
-        border-color: var(--brand-default);
+        border-color: var(--field-border-focus);
         color: var(--text-primary);
     }
 
     // Error перекрывает hover / active / focus.
     &.textareaError {
-        border-color: var(--status-danger);
+        border-color: var(--field-error);
         color: var(--text-primary);
     }
 
     // Disabled идёт последним и перекрывает остальные состояния.
     &:disabled {
-        border-color: var(--border-default);
-        color: var(--text-disabled);
+        opacity: 0.5;
         cursor: not-allowed;
-
-        &::placeholder {
-            color: var(--text-disabled);
-        }
     }
 }
 
 .errorText {
-    color: var(--status-danger);
+    color: var(--field-error);
     font-size: 14px;
     line-height: 24px;
 }
