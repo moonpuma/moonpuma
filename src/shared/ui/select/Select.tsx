@@ -21,6 +21,10 @@ export interface SelectProps {
     onChange?: (value: string) => void;
     disabled?: boolean;
     placeholder?: string;
+    /** Размер: 'md' — стандартный (Header), 'sm' — компактный инлайн (Pagination). */
+    size?: 'md' | 'sm';
+    /** Доп. класс на контейнер — для кастомной ширины у потребителя. */
+    className?: string;
 }
 
 export const Select = ({
@@ -31,6 +35,8 @@ export const Select = ({
                            onChange,
                            disabled = false,
                            placeholder = 'Select-box',
+                           size = 'md',
+                           className,
                        }: SelectProps) => {
     const [isOpen, setIsOpen] = useState(false);
     const [internalValue, setInternalValue] = useState(defaultValue);
@@ -68,7 +74,7 @@ export const Select = ({
     };
 
     return (
-        <div className={styles.container} ref={containerRef}>
+        <div className={clsx(styles.container, { [styles.sm]: size === 'sm' }, className)} ref={containerRef}>
             {label && <span className={styles.label}>{label}</span>}
 
             <button
