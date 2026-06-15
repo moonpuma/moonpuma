@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { Textarea } from './Textarea'
 
 const meta: Meta<typeof Textarea> = {
-    title: 'Shared/Textarea',
+    title: 'Components/Textarea',
     component: Textarea,
     tags: ['autodocs'],
     argTypes: {
