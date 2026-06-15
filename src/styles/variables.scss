@@ -50,6 +50,7 @@
   --bg-surface: var(--color-dark-700); // sidebar, panels
   --bg-elevated: var(--color-dark-500); // inputs, cards, dialogs
   --bg-overlay: var(--color-dark-300); // hover, overlays
+  --bg-overlay-hover: var(--color-dark-100); // hover для нейтральных поверхностей (secondary button)
 
   // Text
   --text-primary: var(--color-light-100);

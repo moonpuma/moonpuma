@@ -2,7 +2,7 @@ import type { ComponentPropsWithoutRef } from 'react'
 import clsx from 'clsx'
 import s from './Button.module.scss'
 
-type ButtonVariant = 'filled' | 'outlined' | 'secondary'
+type ButtonVariant = 'filled' | 'secondary' | 'outlined' | 'text'
 
 interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
     /** Текст кнопки. */

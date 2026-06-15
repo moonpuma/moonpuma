@@ -7,7 +7,7 @@ const meta: Meta<typeof Button> = {
     tags: ['autodocs'],
     argTypes: {
         title: { control: 'text' },
-        variant: { control: 'inline-radio', options: ['filled', 'outlined', 'secondary'] },
+        variant: { control: 'inline-radio', options: ['filled', 'secondary', 'outlined', 'text'] },
         disabled: { control: 'boolean' },
         onClick: { action: 'clicked' },
     },
@@ -34,6 +34,13 @@ export const Secondary: Story = {
     args: {
         title: 'Secondary',
         variant: 'secondary',
+    },
+}
+
+export const Text: Story = {
+    args: {
+        title: 'Text',
+        variant: 'text',
     },
 }
 

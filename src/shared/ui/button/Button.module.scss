@@ -7,11 +7,14 @@
     border-radius: 2px;
     padding: 6px 24px;
     cursor: pointer;
+    // прозрачная рамка по умолчанию, чтобы при focus она не сдвигала размер кнопки
+    border: 1px solid transparent;
     transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, opacity 0.15s ease;
 
+    // в макете focus — это рамка вплотную к кнопке (без outline-offset);
+    // цвет и толщина рамки заданы в каждом варианте отдельно
     &:focus-visible {
-        outline: 2px solid var(--brand-default);
-        outline-offset: 2px;
+        outline: none;
     }
 
     &:disabled {
@@ -24,7 +27,6 @@
 .filled {
     color: var(--text-primary);
     background-color: var(--brand-default);
-    border: 1px solid transparent;
 
     &:hover:not(:disabled) {
         background-color: var(--brand-hover);
@@ -32,6 +34,10 @@
 
     &:active:not(:disabled) {
         background-color: var(--brand-active);
+    }
+
+    &:focus-visible {
+        border: 2px solid var(--brand-active);
     }
 }
 
@@ -50,15 +56,41 @@
         color: var(--brand-active);
         border-color: var(--brand-active);
     }
+
+    &:focus-visible {
+        color: var(--brand-active);
+        border: 2px solid var(--brand-active);
+    }
 }
 
 // secondary — нейтральная кнопка
 .secondary {
     color: var(--text-primary);
     background-color: var(--bg-overlay);
-    border: 1px solid transparent;
 
     &:hover:not(:disabled) {
-        background-color: var(--bg-elevated);
+        background-color: var(--bg-overlay-hover);
+    }
+
+    &:focus-visible {
+        border: 1px solid var(--brand-hover);
+    }
+}
+
+// text — только текст, без фона и рамки; рамка появляется в focus
+.text {
+    color: var(--text-brand);
+    background-color: transparent;
+
+    &:hover:not(:disabled) {
+        color: var(--brand-hover);
+    }
+
+    &:active:not(:disabled) {
+        color: var(--brand-active);
+    }
+
+    &:focus-visible {
+        border: 2px solid var(--brand-active);
     }
 }
