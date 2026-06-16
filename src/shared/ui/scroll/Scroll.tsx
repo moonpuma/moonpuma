@@ -3,7 +3,7 @@ import cn from 'clsx'
 
 import styles from './Scroll.module.scss'
 
-type ScrollProps = PropsWithChildren<{
+export type ScrollProps = PropsWithChildren<{
   className?: string
   orientation?: 'vertical' | 'horizontal'
 }>

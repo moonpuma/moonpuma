@@ -7,7 +7,7 @@ import { DatePicker } from "./DatePicker";
 // ─── Мета ────────────────────────────────────────────────────────────────────
 
 const meta: Meta = {
-    title: "UI/DatePicker",
+    title: "Components/DatePicker",
     component: DatePicker,
     tags: ["autodocs"],
     parameters: {

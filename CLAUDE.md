@@ -63,5 +63,50 @@ SCSS Modules (`*.module.scss`) на каждый компонент. Дизай�
 - В `Header.module.scss` остались неиспользуемые классы от старой реализации на нативном
   `<select>` (`.languageSelector*`, `.flagIcon`, `.arrowIcon`) — сейчас язык выбирается через
   компонент `Select`. Оставлены нетронутыми (правка стилей не требовалась); можно удалить отдельно.
-- `tsc` показывает пред-существующую ошибку в `src/shared/ui/scroll/index.ts`
-    (`ScrollProps` не экспортируется) — присутствует уже в `dev`, к Pagination отношения не имеет.
+- ~~`tsc` показывает пред-существующую ошибку в `src/shared/ui/scroll/index.ts`
+    (`ScrollProps` не экспортируется)~~ — исправлено: тип `ScrollProps` теперь экспортируется из `Scroll.tsx`.
+
+## Замечания по код-ревью (shared / widgets)
+
+Список замечаний по итогам анализа компонентов в `shared` и `widgets`. Отсортировано по
+важности.
+
+### Критичное
+
+- **`Sidebar` молча отбрасывает кастомные `items`** (`src/widgets/sidebar/Sidebar.tsx`).
+  Компонент принимает проп `items`, но фильтрует его по жёстко зашитым `id` из
+  `primaryItems`/`secondaryItems`:
+  ```ts
+  const primary = items.filter((item) => primaryItems.some((p) => p.id === item.id))
+  const secondary = items.filter((item) => secondaryItems.some((s) => s.id === item.id))
+  ```
+  Любой элемент с новым `id` не отрендерится — проп `items` фактически бесполезен для
+  расширения. Если цель — разделение на 2 группы, стоит передавать `primaryItems`/
+  `secondaryItems` отдельными пропами либо хранить признак группы в самом `SidebarItem`.
+
+### Рекомендации (доступность / консистентность)
+
+- **`Select` — клавиатура и a11y** (`src/shared/ui/select/Select.tsx`). Заявлены
+  `role="listbox"`/`role="option"`, но навигации с клавиатуры нет (стрелки/Enter/Home/End),
+  `<li>` кликабельны, но не фокусируемы, нет `aria-activedescendant`. Для production-компонента
+  стоит добавить клавиатурное управление.
+- **Текст ошибки не связан с полем** — `Input`, `Textarea`, `SearchInput`. Есть
+  `aria-invalid`, но `errorText` не привязан через `aria-describedby` + `id`, поэтому
+  скринридер не озвучит причину ошибки. Добавить `aria-describedby={error ? errorId : undefined}`.
+- **Несогласованный alias импорта** — `Alert.tsx` и `Icon.tsx` используют `@shared/...`, а
+  почти весь остальной код — `@/shared/...`. Оба алиаса валидны (`tsconfig`), но разнобой
+  стоит унифицировать.
+- **`Button` использует проп `title` как текст кнопки** (`src/shared/ui/button/Button.tsx`).
+  `title` — нативный HTML-атрибут (тултип), переопределять его смысл неидиоматично и путает.
+  Рекомендуется `children` или `label`. (Утечки в DOM нет — `title` исключается из `restProps`.)
+- **Соглашение об именах папок** — начальная буква везде маленькая, но стиль смешан:
+  `date-picker` (kebab-case) против `radioGroup`/`searchInput` (camelCase). По FSD обычно
+  используется kebab-case (`radio-group`, `search-input`) — стоит выбрать одно соглашение.
+
+### Мелочи
+
+- `RadioGroup` (`src/shared/ui/radioGroup/RadioGroup.tsx`) клонирует только прямых детей через
+  `Children.map` — обёртка любым `<div>` сломает проброс `name`/`checked`; на обёртке также нет
+  `role="radiogroup"`.
+- `Cards` (`src/shared/ui/cards/Cards.tsx`) экспортирует и `Card`, и алиас `Cards = Card`;
+  заголовок истории — `Components/Card`. Двойное имя стоит убрать ради однозначности.
