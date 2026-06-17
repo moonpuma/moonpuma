@@ -1,5 +1,18 @@
-import HomePage from '@/app/page'
+import { Icon } from '@/shared/ui/icon'
+import { Checkbox } from '@/shared/ui/checkbox'
+import HomeIcon from '@/shared/ui/icon/icons/common/home.svg'
+import { Input } from '@/shared/ui/input'
+import s from './page.module.scss'
 
-export default function Page() {
-  return <HomePage />
+export default function HomePage() {
+  return (
+    <div>
+      <h1 className={s.title}>Homepage</h1>
+      <span>Компоненты ниже по коду просто для теста чтобы посмотреть как отрабатывают</span>
+      <Icon icon={HomeIcon} size={24} color='var(--status-danger)' />
+      <Checkbox />
+      <Input label={'Email'} type={'email'} />
+      <Input label={'Password'} type={'password'} showPasswordToggle error={'Too long password'} />
+    </div>
+  )
 }
