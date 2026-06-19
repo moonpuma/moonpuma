@@ -1,0 +1,22 @@
+.wrapper {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 24px 80px;
+}
+
+.title {
+  display: block;
+  text-align: center;
+  margin: 32px 0;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.paragraph {
+  display: block;
+  text-align: center;
+}
