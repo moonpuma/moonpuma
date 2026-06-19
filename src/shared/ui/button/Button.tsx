@@ -1,20 +1,19 @@
 import type { ComponentPropsWithoutRef } from 'react'
+import { Slot } from '@radix-ui/react-slot'
 import clsx from 'clsx'
 import s from './Button.module.scss'
 
 type ButtonVariant = 'filled' | 'secondary' | 'outlined' | 'text'
 
-interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
-    /** Текст кнопки. */
-    title: string
-    /** Визуальный вариант кнопки. */
-    variant?: ButtonVariant
-}
+type ButtonProps = {
+  /** Choose from 4 style variants. Default: 'filled'. */
+  variant?: ButtonVariant
+  /** Render the Button using any element if asChild true */
+  asChild?: boolean
+} & ComponentPropsWithoutRef<'button'>
 
-export const Button = ({ title, variant = 'filled', type = 'button', className, ...restProps }: ButtonProps) => {
-    return (
-        <button type={type} className={clsx(s.button, s[variant], className)} {...restProps}>
-            {title}
-        </button>
-    )
+export const Button = ({ variant = 'filled', asChild, className, ...rest }: ButtonProps) => {
+  const Component = asChild ? Slot : 'button'
+
+  return <Component className={clsx(s.button, s[variant], className)} {...rest} />
 }
