@@ -1,3 +1,4 @@
+import path from 'path'
 import type { StorybookConfig } from '@storybook/nextjs-vite'
 import svgr from 'vite-plugin-svgr'
 
@@ -16,7 +17,7 @@ const config: StorybookConfig = {
       },
     },
   },
-  staticDirs: ['..\\public'],
+  staticDirs: [path.resolve(__dirname, '../public')],
   // SVGR настроен только для Turbopack (next.config.ts). Storybook работает на Vite,
   // поэтому подключаем vite-plugin-svgr с теми же опциями, чтобы импорт `*.svg`
   // так же превращался в React-компонент (а не в URL ассета).
