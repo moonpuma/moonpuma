@@ -1,5 +1,6 @@
 'use client'
 import s from './Menu.module.scss'
+import cn from 'clsx'
 
 import home from '@/shared/ui/icon/icons/common/home-outline.svg'
 import plus from '@/shared/ui/icon/icons/common/plus-square-outline.svg'
@@ -18,15 +19,16 @@ const menuItems = [
   { id: 5, label: 'Profile', href: '/profile', img: person },
 ]
 
-export const Menu = () => {
-  const pathname = usePathname()
-  console.log(pathname)
+export const Menu = ({ className, pathname: pathnameProp }: { className?: string; pathname?: string }) => {
+
+  const currentPathname = usePathname()
+  const pathname = pathnameProp ?? currentPathname
 
   return (
-    <div className={s.wrapper}>
+    <div className={cn(s.wrapper, className)}>
       {menuItems.map((el) => (
         <Link href={el.href} key={el.id}>
-          <Icon icon={el.img} size={24} color='var(--text-primary)' />
+          <Icon icon={el.img} size={24} color={pathname === el.href ? 'var(--color-accent-500)' : ''} />
         </Link>
       ))}
     </div>
