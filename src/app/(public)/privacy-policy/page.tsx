@@ -1,11 +1,16 @@
-import { BackLink } from '@/shared/ui/back-link'
+import type { Metadata } from "next";
+import { LegalDocumentPage } from "@/shared/ui/legal-document-page/LegalDocumentPage";
+import { PRIVACY_POLICY_CONTENT } from "@/shared/ui/legal-document-page/legal-content";
 
-// Заглушка. Публичная страница политики конфиденциальности.
+export const metadata: Metadata = {
+    title: "Privacy Policy",
+};
+
 export default function PrivacyPolicyPage() {
-  return (
-    <>
-      <BackLink href='/sign-up' title='Back to Sign Up' />
-      <h1>Политика конфиденциальности (Privacy Policy)</h1>
-    </>
-  )
+    return (
+        <LegalDocumentPage
+            title="Privacy Policy"
+            paragraphs={PRIVACY_POLICY_CONTENT}
+        />
+    );
 }
