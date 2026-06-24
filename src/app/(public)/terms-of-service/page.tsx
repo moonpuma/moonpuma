@@ -11,6 +11,8 @@ export default function TermsOfServicePage() {
         <LegalDocumentPage
             title="Terms of Service"
             paragraphs={TERMS_OF_SERVICE_CONTENT}
+            backHref="/sign-up"
+            backTitle="Back to Sign Up"
         />
     );
 }

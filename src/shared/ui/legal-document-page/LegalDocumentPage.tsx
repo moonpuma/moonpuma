@@ -5,15 +5,17 @@ import styles from "./LegalDocumentPage.module.scss";
 export interface LegalDocumentPageProps {
     title: string;
     paragraphs: string[];
-    backHref?: string;
-    backTitle?: string;
+    // Куда ведёт ссылка «назад» и её текст — задаются страницей-потребителем,
+    // чтобы компонент в shared/ui не знал о конкретных роутах (FSD: shared — domain-agnostic).
+    backHref: string;
+    backTitle: string;
 }
 
 export function LegalDocumentPage({
                                       title,
                                       paragraphs,
-                                      backHref = "/sign-up",
-                                      backTitle = "Back to Sign Up",
+                                      backHref,
+                                      backTitle,
                                   }: LegalDocumentPageProps) {
     return (
         <div className={styles.wrapper}>

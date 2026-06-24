@@ -11,6 +11,8 @@ export default function PrivacyPolicyPage() {
         <LegalDocumentPage
             title="Privacy Policy"
             paragraphs={PRIVACY_POLICY_CONTENT}
+            backHref="/sign-up"
+            backTitle="Back to Sign Up"
         />
     );
 }
