@@ -6,7 +6,7 @@ pipeline {
         ENV_TYPE = "production"
         PORT = 4311
         NAMESPACE = "moonpuma-site"
-        REGISTRY_HOSTNAME = "kdrenata"
+        REGISTRY_HOSTNAME = "an-kulinich"
         REGISTRY = "registry.hub.docker.com"
         PROJECT = "moonpuma"
         DEPLOYMENT_NAME = "moonpuma-deployment"
