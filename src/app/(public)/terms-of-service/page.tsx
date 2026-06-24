@@ -1,11 +1,16 @@
-import { BackLink } from '@/shared/ui/back-link'
+import type { Metadata } from "next";
+import { LegalDocumentPage } from "@/shared/ui/legal-document-page/LegalDocumentPage";
+import { TERMS_OF_SERVICE_CONTENT } from "@/shared/ui/legal-document-page/legal-content";
 
-// Заглушка. Публичная страница условий использования.
+export const metadata: Metadata = {
+    title: "Terms of Service",
+};
+
 export default function TermsOfServicePage() {
-  return (
-    <>
-      <BackLink href='/sign-up' title='Back to Sign Up' />
-      <h1>Условия использования (Terms of Service)</h1>
-    </>
-  )
+    return (
+        <LegalDocumentPage
+            title="Terms of Service"
+            paragraphs={TERMS_OF_SERVICE_CONTENT}
+        />
+    );
 }
