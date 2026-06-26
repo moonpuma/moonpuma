@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, MouseEvent, type ReactNode } from "react";
+import { useEffect, useId, useRef, MouseEvent, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { Icon } from "../icon";
 import { Typography } from "../typography";
@@ -17,6 +17,7 @@ export interface ModalProps {
 
 export function Modal({ isOpen, onClose, title, children, footer }: ModalProps) {
     const dialogRef = useRef<HTMLDivElement>(null);
+    const titleId = useId();
 
     // Закрытие по Escape
     useEffect(() => {
@@ -55,7 +56,7 @@ export function Modal({ isOpen, onClose, title, children, footer }: ModalProps) 
                 ref={dialogRef}
                 role="dialog"
                 aria-modal="true"
-                aria-labelledby="modal-title"
+                aria-labelledby={titleId}
                 className={styles.dialog}
             >
                 <div className={styles.header}>
@@ -63,7 +64,7 @@ export function Modal({ isOpen, onClose, title, children, footer }: ModalProps) 
                         variant="h3"
                         className={styles.title}
                     >
-                        <span id="modal-title">{title}</span>
+                        <span id={titleId}>{title}</span>
                     </Typography>
                     <button
                         type="button"
