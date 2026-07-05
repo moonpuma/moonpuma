@@ -1,10 +1,15 @@
-import { Recaptcha } from '@/shared/ui/recaptcha'
+import type { Metadata } from 'next'
+import { ForgotPasswordForm } from '@/features/auth/forgot-password'
+import s from './page.module.scss'
 
-// Заглушка. Позже здесь будет форма восстановления пароля.
+export const metadata: Metadata = {
+  title: 'Forgot Password',
+}
+
 export default function ForgotPasswordPage() {
   return (
-    <>
-      <Recaptcha />
-    </>
+    <main className={s.page}>
+      <ForgotPasswordForm />
+    </main>
   )
 }

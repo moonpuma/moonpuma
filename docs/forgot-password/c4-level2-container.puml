@@ -1,0 +1,21 @@
+@startuml
+
+title C4 Level 2 - Container Diagram
+
+actor "User" as user
+
+node "Web App\n[Next.js 16 + React 19]" as webapp {
+}
+
+node "Auth Backend API\n[TODO: not implemented]" as backend {
+}
+
+rectangle "Email Service\n[TODO: provider not selected]" as email
+rectangle "Google reCAPTCHA\n[widget + verification API]" as recaptcha
+
+user --> webapp : opens browser
+webapp --> backend : HTTP requests (TODO)
+webapp --> recaptcha : loads widget, verifies token
+backend --> email : sends recovery link (TODO)
+
+@enduml
