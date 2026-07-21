@@ -1,5 +1,15 @@
-// Заглушка. Позже здесь будет форма регистрации со ссылками на
-// /privacy-policy и /terms-of-service.
+import type { Metadata } from 'next'
+import { SignUpForm } from './_components/SignUpForm'
+import s from './page.module.scss'
+
+export const metadata: Metadata = {
+  title: 'Sign Up',
+}
+
 export default function SignUpPage() {
-  return <h1>Регистрация (Sign Up)</h1>
+  return (
+    <div className={s.page}>
+      <SignUpForm />
+    </div>
+  )
 }
