@@ -1,0 +1,95 @@
+/* Заголовки */
+.large {
+  font-size: 26px;
+  line-height: 1.38;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.h1 {
+  font-size: 20px;
+  line-height: 1.8;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.h2 {
+  font-size: 18px;
+  line-height: 1.33;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.h3 {
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Тексты 16px */
+.regular_text_16 {
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 400;
+  color: var(--text-primary);
+}
+.bold_text_16 {
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Тексты 14px */
+.regular_text_14 {
+  font-size: 14px;
+  line-height: 1.71;
+  font-weight: 400;
+  color: var(--text-primary);
+}
+.medium_text_14 {
+  font-size: 14px;
+  line-height: 1.71;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+.bold_text_14 {
+  font-size: 14px;
+  line-height: 1.71;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Маленькие тексты */
+.small_text {
+  font-size: 12px;
+  line-height: 1.33;
+  font-weight: 400;
+  color: var(--text-primary);
+}
+.semi_bold_small_text {
+  font-size: 12px;
+  line-height: 1.33;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.regular_link {
+  font-size: 14px;
+  line-height: 1.71;
+  font-weight: 400;
+  color: var(--brand-default);
+  text-decoration: underline;
+}
+.regular_link:hover {
+  color: var(--brand-hover);
+}
+
+.small_link {
+  font-size: 12px;
+  line-height: 1.33;
+  font-weight: 400;
+  color: var(--brand-default);
+  text-decoration: underline;
+}
+.small_link:hover {
+  color: var(--brand-hover);
+}

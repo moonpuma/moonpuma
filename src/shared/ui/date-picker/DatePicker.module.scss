@@ -1,0 +1,273 @@
+.wrapper {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  max-width: 320px;
+}
+
+.label {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+// ─── Триггер ─────────────────────────────────────────────────────────────────
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: 4px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+
+  &:hover:not(.disabled) {
+    border-color: var(--brand-hover);
+  }
+
+  &.focus {
+    border-color: var(--brand-default);
+    box-shadow: 0 0 0 2px var(--bg-overlay);
+  }
+
+  &.error {
+    border-color: var(--status-danger);
+
+    .icon {
+      color: var(--status-danger);
+    }
+  }
+
+  &.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: var(--bg-surface);
+  }
+}
+
+.value {
+  font-size: 14px;
+  color: var(--text-primary);
+  flex-grow: 1;
+  user-select: none;
+
+  &.placeholder {
+    color: var(--text-secondary);
+  }
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  width: 16px;
+  height: 16px;
+}
+
+.errorText {
+  font-size: 11px;
+  color: var(--status-danger);
+  margin-top: 2px;
+}
+
+// ─── Дропдаун ────────────────────────────────────────────────────────────────
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 10;
+  width: 280px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 4px 20px var(--shadow-dropdown, rgba(0, 0, 0, 0.5));
+}
+
+// ─── Шапка ───────────────────────────────────────────────────────────────────
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.monthTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.navBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 4px;
+  border-radius: 4px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+
+  &:hover {
+    background-color: var(--bg-overlay);
+    color: var(--text-primary);
+  }
+}
+
+// ─── Сетка ───────────────────────────────────────────────────────────────────
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px 0; // горизонтальный gap = 0, чтобы range-полоса была бесшовной
+}
+
+.weekDay {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  padding-bottom: 8px;
+  text-align: center;
+}
+
+// ─── Обёртка ячейки (фон диапазона) ──────────────────────────────────────────
+
+.dayWrapper {
+  position: relative;
+  width: 100%;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.rangeMiddle {
+    background-color: var(--brand-range-bg, rgba(51, 102, 255, 0.12));
+  }
+
+  &.rangeStart {
+    background: linear-gradient(
+                    to right,
+                    transparent 50%,
+                    var(--brand-range-bg, rgba(51, 102, 255, 0.12)) 50%
+    );
+  }
+
+  &.rangeEnd {
+    background: linear-gradient(
+                    to left,
+                    transparent 50%,
+                    var(--brand-range-bg, rgba(51, 102, 255, 0.12)) 50%
+    );
+  }
+}
+
+// ─── Кнопка дня ──────────────────────────────────────────────────────────────
+
+.dayCell {
+  position: relative;
+  z-index: 2;
+
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: none;
+  border: none;
+  border-radius: 50%;
+
+  font-size: 12px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background-color 0.1s, color 0.1s;
+
+  &:disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.4;
+  }
+
+  &:hover:not(:disabled):not(.dayOutside):not(.dayPast) {
+    background-color: var(--bg-overlay);
+  }
+}
+
+// ─── Модификаторы ─────────────────────────────────────────────────────────────
+
+// Дни соседних месяцев
+.dayOutside {
+  color: var(--text-disabled);
+  pointer-events: none;
+}
+
+// Выходные
+.dayWeekend {
+  color: var(--status-danger);
+}
+
+// Прошедшие даты — красная подсветка, клик разрешён (ошибка обрабатывается снаружи)
+.dayPast {
+  color: var(--status-danger);
+  opacity: 0.6;
+
+  &:hover {
+    background-color: rgba(var(--status-danger-rgb, 220, 53, 69), 0.1);
+  }
+}
+
+// Сегодня — кольцо, не перекрывает выбранные состояния
+.dayToday:not(.daySelected):not(.dayStart):not(.dayEnd) {
+  border: 1px solid var(--brand-default);
+}
+
+// Одиночный выбор
+.daySelected {
+  background-color: var(--brand-default);
+  color: var(--color-light-100);
+  font-weight: 600;
+
+  &:hover:not(:disabled) {
+    background-color: var(--brand-hover);
+  }
+}
+
+// Старт диапазона — левый полукруг
+.dayStart {
+  background-color: var(--brand-default);
+  color: var(--color-light-100);
+  font-weight: 600;
+  border-radius: 50% 0 0 50%;
+
+  &:hover:not(:disabled) {
+    background-color: var(--brand-hover);
+  }
+}
+
+// Конец диапазона — правый полукруг
+.dayEnd {
+  background-color: var(--brand-default);
+  color: var(--color-light-100);
+  font-weight: 600;
+  border-radius: 0 50% 50% 0;
+
+  &:hover:not(:disabled) {
+    background-color: var(--brand-hover);
+  }
+}
+
+// Дни внутри диапазона — полоса через dayWrapper, кнопка прозрачная
+.dayRangeSelected:not(.dayStart):not(.dayEnd) {
+  background: none;
+  color: var(--color-accent-100);
+  border-radius: 0;
+}

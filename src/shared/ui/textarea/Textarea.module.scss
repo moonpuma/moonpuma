@@ -1,0 +1,74 @@
+.textareaWrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+
+    // Disabled — приглушаем подпись (как в макете).
+    &.disabled .label {
+        color: var(--text-disabled);
+    }
+}
+
+.label {
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.textarea {
+    width: 100%;
+    min-height: 80px;
+    background-color: var(--bg-elevated);
+    border: 1px solid var(--field-border); // Default — серая рамка #4c4c4c.
+    border-radius: 2px;
+    padding: 6px 12px;
+    box-sizing: border-box;
+    color: var(--text-secondary);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.15s ease, color 0.15s ease;
+
+    &::placeholder {
+        color: var(--text-secondary);
+    }
+
+    // Hover — рамка светлее (поле ещё пустое).
+    &:hover:not(:disabled) {
+        border-color: var(--field-border-hover);
+    }
+
+    // Active — заполненное поле: белая рамка и белый текст.
+    &:not(:placeholder-shown) {
+        border-color: var(--field-border-active);
+        color: var(--text-primary);
+    }
+
+    // Focus — синяя рамка.
+    &:focus {
+        border-color: var(--field-border-focus);
+        color: var(--text-primary);
+    }
+
+    // Error перекрывает hover / active / focus.
+    &.textareaError {
+        border-color: var(--field-error);
+        color: var(--text-primary);
+    }
+
+    // Disabled идёт последним и перекрывает остальные состояния.
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+.errorText {
+    color: var(--field-error);
+    font-size: 14px;
+    line-height: 24px;
+}

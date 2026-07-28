@@ -1,0 +1,51 @@
+.alertWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 380px;
+  height: 48px;
+  border-radius: 2px;
+  padding: 0 16px;
+  box-sizing: border-box;
+
+  // success — успех (зелёный)
+  &.success {
+    border: 1px solid var(--status-success);
+    background-color: var(--status-success-bg);
+  }
+
+  // error — ошибка (красный)
+  &.error {
+    border: 1px solid var(--status-danger);
+    background-color: var(--status-danger-bg);
+  }
+}
+
+.text {
+  color: var(--text-primary);
+  font-size: 16px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px;
+  margin-left: 12px;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--text-primary);
+    outline-offset: 2px;
+  }
+}
