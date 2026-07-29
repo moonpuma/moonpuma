@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { Button } from '@/shared/ui/button'
 import { useRouter } from '@/shared/i18n/navigation'
+import { routes } from '@/shared/routing/routes'
 import s from './page.module.scss'
 
 // Экран успешного подтверждения email после регистрации (sign up).
@@ -14,7 +15,7 @@ export default function SuccessPage() {
     <div className={s.container}>
       <h1 className={s.title}>Congratulations!</h1>
       <p className={s.description}>Your email has been confirmed</p>
-      <Button title='Sign In' className={s.button} onClick={() => router.push('/sign-in')} />
+      <Button title='Sign In' className={s.button} onClick={() => router.push(routes.auth.signIn())} />
       <Image
         className={s.image}
         src='/images/email-confirmed.svg'

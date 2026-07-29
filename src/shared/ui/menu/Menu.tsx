@@ -9,13 +9,14 @@ import search from '@/shared/ui/icon/icons/common/search.svg'
 import person from '@/shared/ui/icon/icons/common/person-outline.svg'
 import { Icon } from '@shared/ui/icon'
 import { Link, usePathname } from '@/shared/i18n/navigation'
+import { routes } from '@/shared/routing/routes'
 
 const menuItems = [
-  { id: 1, label: 'Home', href: '/', icon: 'home', img: home },
+  { id: 1, label: 'Home', href: routes.home(), icon: 'home', img: home },
   { id: 2, label: 'Generate', href: '/generate', img: plus },
   { id: 3, label: 'Messenger', href: '/messenger', img: message },
   { id: 4, label: 'Search', href: '/search', img: search },
-  { id: 5, label: 'Profile', href: '/profile', img: person },
+  { id: 5, label: 'Profile', href: routes.profile.root(), img: person },
 ]
 
 export const Menu = ({ className, pathname: pathnameProp }: { className?: string; pathname?: string }) => {

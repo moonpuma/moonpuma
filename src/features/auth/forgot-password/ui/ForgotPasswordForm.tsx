@@ -9,6 +9,7 @@ import { ControlledInput } from '@/shared/ui/controlled-input'
 import { Button } from '@/shared/ui/button'
 import { Recaptcha } from '@/shared/ui/recaptcha'
 import { Link } from '@/shared/i18n/navigation'
+import { routes } from '@/shared/routing/routes'
 import { EmailSentModal } from '@/features/auth/email-sent-modal'
 import { forgotPasswordSchema, type ForgotPasswordFormValues } from '../model/schema'
 import s from './ForgotPasswordForm.module.scss'
@@ -73,7 +74,7 @@ export function ForgotPasswordForm() {
           </Button>
 
           <Button asChild variant='text' className={s.backLink}>
-            <Link href='/sign-in'>Back to Sign In</Link>
+            <Link href={routes.auth.signIn()}>Back to Sign In</Link>
           </Button>
 
           {!isSent && (

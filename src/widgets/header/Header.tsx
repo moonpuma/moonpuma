@@ -4,6 +4,7 @@ import clsx from 'clsx'
 import { useLocale } from 'next-intl'
 import { Link, usePathname, useRouter } from '@/shared/i18n/navigation'
 import { routing } from '@/shared/i18n/routing'
+import { routes } from '@/shared/routing/routes'
 import s from './Header.module.scss'
 import { Icon } from '@/shared/ui/icon'
 import { Button } from '@/shared/ui/button'
@@ -41,7 +42,7 @@ export const Header = ({ isLoggedIn = false, className }: HeaderProps) => {
   return (
     <header className={clsx(s.headerWrapper, className)}>
       <div className={s.headerContainer}>
-        <Link href='/' className={s.logoLink}>
+        <Link href={routes.home()} className={s.logoLink}>
           <Typography variant='h1' className={s.logo}>
             Inctagram
           </Typography>
@@ -58,10 +59,10 @@ export const Header = ({ isLoggedIn = false, className }: HeaderProps) => {
           ) : (
             <>
               <Button asChild variant='outlined' className={s.loginBtn}>
-                <Link href='/sign-in'>Log in</Link>
+                <Link href={routes.auth.signIn()}>Log in</Link>
               </Button>
               <Button asChild variant='filled' className={s.signupBtn}>
-                <Link href='/sign-up'>Sign up</Link>
+                <Link href={routes.auth.signUp()}>Sign up</Link>
               </Button>
             </>
           )}
