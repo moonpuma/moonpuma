@@ -1,8 +1,8 @@
 'use client'
 
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
 import { Button } from '@/shared/ui/button'
+import { useRouter } from '@/shared/i18n/navigation'
 import s from './page.module.scss'
 
 // Экран успешного подтверждения email после регистрации (sign up).

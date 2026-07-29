@@ -1,9 +1,8 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { Icon } from "@/shared/ui/icon";
+import { Link, useRouter } from "@/shared/i18n/navigation";
 import { Input } from "@/shared/ui/input";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";

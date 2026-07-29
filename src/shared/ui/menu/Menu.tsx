@@ -8,8 +8,7 @@ import message from '@/shared/ui/icon/icons/common/message-circle-outline.svg'
 import search from '@/shared/ui/icon/icons/common/search.svg'
 import person from '@/shared/ui/icon/icons/common/person-outline.svg'
 import { Icon } from '@shared/ui/icon'
-import { usePathname } from 'next/navigation'
-import Link from 'next/link'
+import { Link, usePathname } from '@/shared/i18n/navigation'
 
 const menuItems = [
   { id: 1, label: 'Home', href: '/', icon: 'home', img: home },
@@ -22,6 +21,7 @@ const menuItems = [
 export const Menu = ({ className, pathname: pathnameProp }: { className?: string; pathname?: string }) => {
 
   const currentPathname = usePathname()
+  // next-intl's usePathname() уже возвращает путь без префикса локали (/profile, не /en/profile).
   const pathname = pathnameProp ?? currentPathname
 
   return (

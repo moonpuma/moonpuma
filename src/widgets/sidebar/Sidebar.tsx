@@ -1,8 +1,8 @@
-import Link from 'next/link'
 import clsx from 'clsx'
 import type { CSSProperties } from 'react'
 
 import { Icon, type IconComponent } from '@/shared/ui/icon'
+import { Link } from '@/shared/i18n/navigation'
 import BookmarkOutlineIcon from '@/shared/ui/icon/icons/common/bookmark-outline.svg'
 import HomeIcon from '@/shared/ui/icon/icons/common/home.svg'
 import HomeOutlineIcon from '@/shared/ui/icon/icons/common/home-outline.svg'
