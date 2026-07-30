@@ -7,7 +7,7 @@ import plus from '@/shared/ui/icon/icons/common/plus-square-outline.svg'
 import message from '@/shared/ui/icon/icons/common/message-circle-outline.svg'
 import search from '@/shared/ui/icon/icons/common/search.svg'
 import person from '@/shared/ui/icon/icons/common/person-outline.svg'
-import { Icon } from '@shared/ui/icon'
+import { Icon } from '@/shared/ui/icon'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 
@@ -20,7 +20,6 @@ const menuItems = [
 ]
 
 export const Menu = ({ className, pathname: pathnameProp }: { className?: string; pathname?: string }) => {
-
   const currentPathname = usePathname()
   const pathname = pathnameProp ?? currentPathname
 

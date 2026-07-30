@@ -25,12 +25,7 @@ const languageOptions: SelectOption[] = [
   { value: 'ru', label: 'Русский', icon: ruFlagIcon },
 ]
 
-export const Header = ({
-  isLoggedIn = false,
-  className,
-  onLoginClick = () => {},
-  onSignupClick = () => {},
-}: HeaderProps) => {
+export const Header = ({ isLoggedIn = false, className, onLoginClick, onSignupClick }: HeaderProps) => {
   const [lang, setLang] = useState<'en' | 'ru'>('en')
 
   const handleLanguageChange = (value: string) => {
@@ -56,11 +51,15 @@ export const Header = ({
             </button>
           ) : (
             <>
-              <Button variant='outlined' onClick={onLoginClick} className={s.loginBtn}>
-                Log in
+              <Button variant='outlined' asChild className={s.loginBtn}>
+                <Link href='/sign-in' onClick={onLoginClick}>
+                  Sign In
+                </Link>
               </Button>
-              <Button variant='filled' onClick={onSignupClick} className={s.signupBtn}>
-                Sign up
+              <Button variant='filled' asChild className={s.signupBtn}>
+                <Link href='/sign-up' onClick={onSignupClick}>
+                  Sign up
+                </Link>
               </Button>
             </>
           )}
