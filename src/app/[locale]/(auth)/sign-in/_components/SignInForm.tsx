@@ -1,9 +1,9 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { Icon } from "@/shared/ui/icon";
+import { Link, useRouter } from "@/shared/i18n/navigation";
+import { routes } from "@/shared/routing/routes";
 import { Input } from "@/shared/ui/input";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
@@ -36,7 +36,7 @@ export function SignInForm() {
         try {
             // TODO: заменить на реальный API-запрос через TanStack Query
             console.log("Sign in data:", data);
-            router.push("/");
+            router.push(routes.home());
         } catch {
             setError("password", {
                 message: "The email or password are incorrect. Try again please",
@@ -111,7 +111,7 @@ export function SignInForm() {
                     })}
                 />
 
-                <Link href="/forgot-password" className={s.forgotPassword}>
+                <Link href={routes.auth.forgotPassword()} className={s.forgotPassword}>
                     <Typography variant="regular_text_14">
                         Forgot Password
                     </Typography>
@@ -127,7 +127,7 @@ export function SignInForm() {
                 <Typography variant="regular_text_16">
                     Don&apos;t have an account?
                 </Typography>
-                <Typography variant="regular_link" href="/sign-up">
+                <Typography variant="regular_link" href={routes.auth.signUp()}>
                     Sign Up
                 </Typography>
             </div>

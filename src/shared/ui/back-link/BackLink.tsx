@@ -1,6 +1,6 @@
-import Link from 'next/link'
 import clsx from 'clsx'
 import { Icon } from '@/shared/ui/icon'
+import { Link } from '@/shared/i18n/navigation'
 import ArrowBackIcon from '@/shared/ui/icon/icons/common/arrow-back-outline.svg'
 import s from './BackLink.module.scss'
 
@@ -13,7 +13,7 @@ interface BackLinkProps {
 }
 
 /**
- * Ссылка «назад» со стрелкой. Навигация нативная (next/link).
+ * Ссылка «назад» со стрелкой. Навигация через next-intl Link (сохраняет текущую локаль).
  *
  * @example
  * <BackLink href='/sign-up' title='Back to Sign Up' />

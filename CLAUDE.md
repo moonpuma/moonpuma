@@ -13,7 +13,7 @@
 и шаг. Оглавление — в [`docs/README.md`](docs/README.md).
 
 - [`docs/AUTH.md`](docs/AUTH.md) — аутентификация (UC-1 … UC-5): регистрация, вход,
-  восстановление пароля, выход, OAuth. Страницы аутентификации живут в `src/app/(auth)/`.
+  восстановление пароля, выход, OAuth. Страницы аутентификации живут в `src/app/[locale]/(auth)/`.
 
 ## Команды
 
@@ -36,14 +36,71 @@ Next.js 16 (App Router, React 19) с **включённым React Compiler** (`r
 
 Исходный код в `src/` организован по слоям FSD: `app/`, `features/`, `entities/`, `shared/`. Зависимости направлены только вниз (верхние слои импортируют из нижних, но не наоборот). В `shared/ui/` находится переиспользуемая библиотека компонентов; основная часть текущего кода живёт там.
 
-`src/app/` — корень Next.js App Router. Корневой `layout.tsx` — это только оболочка (`<html>`/`<body>` + шрифты), без хедера. Маршруты разделены на группы (URL они не меняют), и у каждой группы свой `layout.tsx`, который рендерит хедер (`@/widgets/header`):
+`src/app/` — корень Next.js App Router. Все маршруты лежат под динамическим сегментом
+`src/app/[locale]/`, который обеспечивает i18n через библиотеку **next-intl**. Изначально роутинг
+(`[locale]`, middleware, `Link`-обёртка) был реализован вручную на нативных механизмах Next.js;
+позже перешли на next-intl ради `t.rich()` для текста со вложенными ссылками (см. `SignUpForm`),
+ICU-плюрализации/форматирования и готовых server/client-хуков для переводов — сам `[locale]`-
+роутинг при этом не менялся, next-intl требует ту же структуру сегментов:
+
+- `src/shared/i18n/routing.ts` — единственный источник истины по `locales`/`defaultLocale`
+  (`defineRouting({ locales: ['en', 'ru'], defaultLocale: 'en', localePrefix: 'always' })`).
+  Локаль всегда присутствует в URL (`/en`, `/ru/sign-in`, …), варианта без префикса нет.
+- `src/shared/i18n/navigation.ts` — `createNavigation(routing)` экспортирует локаль-осведомлённые
+  `Link`/`useRouter`/`usePathname`/`redirect`/`getPathname`. **Все** внутренние ссылки и
+  программная навигация в приложении идут через них (`@/shared/i18n/navigation`), а не через голые
+  `next/link`/`next/navigation` — иначе переход по ссылке без локали будет перехвачен `proxy` и
+  может сменить локаль на неожиданную. `usePathname()` уже возвращает путь без префикса локали.
+- `src/shared/routing/routes.ts` — Route Key Factory: единственный источник истины по путям
+  приложения (без локали — её добавляет `Link`/`useRouter` из `@/shared/i18n/navigation`). Каждый
+  маршрут — функция (`routes.auth.signIn()`, `routes.profile.byId(id)`), а не голая строка, чтобы
+  переименование пути правилось в одном месте, а не по всем местам использования. Использовать
+  везде, где раньше был хардкод `href='/sign-in'`/`router.push('/...')`. Исключение — плейсхолдерные
+  пути в дефолтных данных `Sidebar`/`Menu` (`/create`, `/messenger`, `/search`, `/statistics`,
+  `/favorites`, `/generate`) — под них ещё нет реальных страниц, поэтому в фабрике их нет; когда
+  появятся — добавить в `routes.ts` и завести здесь же.
+- `src/shared/i18n/request.ts` — `getRequestConfig()`, резолвит локаль сегмента и подгружает
+  `messages/<locale>.json` (динамический импорт).
+- `messages/en.json`, `messages/ru.json` — словари переводов (сейчас пустые — см. заметку ниже).
+- `src/proxy.ts` — `createMiddleware(routing)` из `next-intl/middleware` (default export). В
+  Next.js 16 конвенция `middleware.ts` устарела в пользу `proxy.ts` — см.
+  https://nextjs.org/docs/messages/middleware-to-proxy; next-intl отдаёт обычный default-экспорт,
+  совместимый с обеими конвенциями.
+- `next.config.ts` — обёрнут в `createNextIntlPlugin('./src/shared/i18n/request.ts')`.
+- `src/app/[locale]/layout.tsx` — фактический корневой layout (`<html lang={locale}>`/`<body>` +
+  шрифты, без хедера): так как `[locale]` — первый и единственный сегмент внутри `app/`, именно
+  этот layout рендерит `<html>`/`<body>`, отдельного `src/app/layout.tsx` больше нет.
+  Экспортирует `generateStaticParams()` (по `routing.locales`), валидирует `params.locale`
+  (`hasLocale()` из `next-intl`, `notFound()` при недопустимой локали), вызывает
+  `setRequestLocale(locale)` (нужно для статического рендеринга при `generateStaticParams`) и
+  оборачивает `children` в `<NextIntlClientProvider>` (без явных `locale`/`messages` — при рендере
+  из Server Component next-intl подставляет их сам).
+- Переключатель языка в `Header` (`@/widgets/header`) читает локаль через `useLocale()` из
+  `next-intl`, путь — через `usePathname()` из `@/shared/i18n/navigation`, и при смене вызывает
+  `router.push(pathname, { locale })`; cookie `NEXT_LOCALE` синхронизирует сама next-intl.
+
+> Заметка: `messages/*.json` сейчас пустые — переводы текста намеренно отложены (см. историю
+> задачи), реализована только инфраструктура (роутинг, `Link`/`useRouter`, словари загружаются, но
+> не используются). Когда дойдёт очередь до текста, `SignUpForm` — хороший первый кандидат:
+> согласие на Terms/Privacy — фраза с двумя вложенными ссылками, ровно случай под `t.rich()`.
+
+> Заметка (статический рендеринг): `setRequestLocale(locale)` в корневом layout не всегда
+> достаточно. Если Server Component page (без `'use client'` где-либо в своей цепочке предков)
+> рендерит `Link` из `@/shared/i18n/navigation` — как `privacy-policy`/`terms-of-service` через
+> `LegalDocumentPage` → `BackLink` — страница «выпадает» из SSG в `ƒ` (dynamic) без своего
+> собственного вызова `setRequestLocale(locale)` в этом page.tsx. У страниц, которые рендерят
+> next-intl `Link`/`useTranslations`/etc. изнутри уже `'use client'`-дерева (формы аутентификации,
+> `Header`), этой проблемы нет. Признак в билде: `pnpm build` печатает маршрут как `ƒ` вместо `●`.
+
+Внутри `[locale]/` маршруты разделены на группы (URL они не меняют), и у каждой группы свой
+`layout.tsx`, который рендерит хедер (`@/widgets/header`):
 
 - `(public)` — страницы для всех: `/` (homepage), `/profile`, `/profile/[id]`, `/privacy-policy`, `/terms-of-service`. Сюда же кладём публичные статические документы (политики), на которые ссылается форма регистрации.
 - `(auth)` — процесс аутентификации для **неавторизованных**: `/sign-up`, `/sign-in`, `/forgot-password`. Свой `layout.tsx` центрирует контент (`layout.module.scss`).
 - `(private)` — страницы только для **авторизованных**: `/settings`. Здесь в будущем guard/редирект и Sidebar; layout пока рендерит `<Header isLoggedIn />`.
 
 > Важно: страницы аутентификации должны лежать в `(auth)`, а **не** в `(private)` — guard в `(private)` будет редиректить неавторизованных, а форма входа нужна именно им.
-> Корневого `src/app/page.tsx` быть не должно: он резолвится в `/` так же, как `(public)/page.tsx`, и даёт конфликт маршрутов. Homepage живёт в `(public)/page.tsx`.
+> Корневого `src/app/[locale]/page.tsx` быть не должно: он резолвится в `/{locale}` так же, как `(public)/page.tsx`, и даёт конфликт маршрутов. Homepage живёт в `(public)/page.tsx`.
 
 ### Алиасы путей (`tsconfig.json`)
 
@@ -53,7 +110,7 @@ Next.js 16 (App Router, React 19) с **включённым React Compiler** (`r
 
 ### Стилизация
 
-SCSS Modules (`*.module.scss`) на каждый компонент. Дизайн-токены живут в `src/styles/variables.scss` как CSS-переменные на `:root`, в двух уровнях: сырые примитивы палитры (цветовые шкалы вроде `--color-dark-500`) и семантические токены, которые их потребляют (`--bg-surface`, `--text-primary`). Приложение существует только в тёмной теме, поэтому слоя переключения тем нет — компоненты должны использовать семантические токены, а не примитивы. Поскольку токены — это CSS-переменные на `:root`, файлы `*.module.scss` компонентов просто ссылаются на них через `var(--token)` и вовсе не обязаны импортировать `variables.scss`. Глобальные сбросы/тема находятся в `src/app/globals.scss` (который подключает токены через `@use '../styles/variables' as *`) и импортируются один раз в `src/app/layout.tsx`.
+SCSS Modules (`*.module.scss`) на каждый компонент. Дизайн-токены живут в `src/styles/variables.scss` как CSS-переменные на `:root`, в двух уровнях: сырые примитивы палитры (цветовые шкалы вроде `--color-dark-500`) и семантические токены, которые их потребляют (`--bg-surface`, `--text-primary`). Приложение существует только в тёмной теме, поэтому слоя переключения тем нет — компоненты должны использовать семантические токены, а не примитивы. Поскольку токены — это CSS-переменные на `:root`, файлы `*.module.scss` компонентов просто ссылаются на них через `var(--token)` и вовсе не обязаны импортировать `variables.scss`. Глобальные сбросы/тема находятся в `src/app/globals.scss` (который подключает токены через `@use '../styles/variables' as *`) и импортируются один раз в `src/app/[locale]/layout.tsx`.
 
 > Замечание: некоторые старые компоненты (например, `Button`) всё ещё используют обычные CSS Modules и форматирование с двойными кавычками/точками с запятой, появившееся до конфигурации Prettier — при правке подстраивайся под стиль окружающего файла, но новые компоненты должны следовать `.prettierrc` (без точек с запятой, одинарные кавычки, ширина печати 120) и SCSS Modules.
 

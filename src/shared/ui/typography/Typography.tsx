@@ -1,7 +1,7 @@
 import React from 'react';
-import Link from 'next/link';
 import s from './Typography.module.scss';
 import clsx from 'clsx';
+import { Link } from '@/shared/i18n/navigation';
 
 
 export type TypographyVariant =

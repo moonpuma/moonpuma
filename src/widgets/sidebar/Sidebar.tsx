@@ -1,8 +1,9 @@
-import Link from 'next/link'
 import clsx from 'clsx'
 import type { CSSProperties } from 'react'
 
 import { Icon, type IconComponent } from '@/shared/ui/icon'
+import { Link } from '@/shared/i18n/navigation'
+import { routes } from '@/shared/routing/routes'
 import BookmarkOutlineIcon from '@/shared/ui/icon/icons/common/bookmark-outline.svg'
 import HomeIcon from '@/shared/ui/icon/icons/common/home.svg'
 import HomeOutlineIcon from '@/shared/ui/icon/icons/common/home-outline.svg'
@@ -40,7 +41,7 @@ const primaryItems: SidebarItem[] = [
   {
     id: 'feed',
     label: 'Feed',
-    href: '/',
+    href: routes.home(),
     icon: HomeOutlineIcon,
     activeIcon: HomeIcon,
   },
@@ -53,7 +54,7 @@ const primaryItems: SidebarItem[] = [
   {
     id: 'profile',
     label: 'My Profile',
-    href: '/profile',
+    href: routes.profile.root(),
     icon: PersonOutlineIcon,
   },
   {
@@ -121,7 +122,7 @@ const renderItem = (item: SidebarItem, activeItemId?: string) => {
 export const Sidebar = ({
   items = defaultSidebarItems,
   activeItemId,
-  signInHref = '/sign-in',
+  signInHref = routes.auth.signIn(),
   logoutLabel = 'Log Out',
   className,
   style,
