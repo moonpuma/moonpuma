@@ -117,12 +117,9 @@ export function SignInForm() {
                     </Typography>
                 </Link>
 
-                <Button
-                    title="Sign In"
-                    type="submit"
-                    disabled={isSubmitting}
-                    className={s.submitButton}
-                />
+                <Button type="submit" disabled={isSubmitting} className={s.submitButton}>
+                    Sign In
+                </Button>
             </form>
 
             {/* Ссылка на регистрацию */}

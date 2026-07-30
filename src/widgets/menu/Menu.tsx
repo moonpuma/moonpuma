@@ -20,7 +20,6 @@ const menuItems = [
 ]
 
 export const Menu = ({ className, pathname: pathnameProp }: { className?: string; pathname?: string }) => {
-
   const currentPathname = usePathname()
   // next-intl's usePathname() уже возвращает путь без префикса локали (/profile, не /en/profile).
   const pathname = pathnameProp ?? currentPathname
