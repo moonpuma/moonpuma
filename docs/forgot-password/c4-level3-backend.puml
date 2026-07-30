@@ -1,0 +1,37 @@
+@startuml
+
+title C4 Level 3 - Component Diagram (Backend - TODO, not implemented)
+
+package "Auth Backend API [TODO]" {
+
+  component "POST /forgot-password" as forgotEndpoint {
+  }
+  note right of forgotEndpoint
+    Planned: validate email exists,
+    generate reset token, send recovery email
+  end note
+
+  component "POST /reset-password" as resetEndpoint {
+  }
+  note right of resetEndpoint
+    Planned: validate token, set new password,
+    invalidate all active sessions
+  end note
+
+  component "POST /resend-link" as resendEndpoint {
+  }
+  note right of resendEndpoint
+    Planned: re-send recovery email
+    for the same address
+  end note
+}
+
+database "Users Store\n[TODO]" as db
+rectangle "Email Service\n[TODO]" as email
+
+forgotEndpoint --> db : check email exists
+forgotEndpoint --> email : send recovery link
+resetEndpoint --> db : update password, reset sessions
+resendEndpoint --> email : re-send recovery link
+
+@enduml

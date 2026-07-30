@@ -1,0 +1,31 @@
+@startuml
+
+title C4 Level 4 - Code Diagram: POST /resend-link handler (TODO, planned)
+
+start
+
+:Receive request body\n{ email };
+
+if (email missing?) then (yes)
+  :Return 400\n{ message: "Email is required" };
+  stop
+endif
+
+if (user with email not found?) then (yes)
+  :Return 404\n{ message: "User with this email doesn't exist" };
+  stop
+endif
+
+:Generate new password reset token\n(replaces previous one);
+
+:Save token linked to user;
+
+:Build recovery link\nCLIENT_URL + "/create-new-password?token=" + token;
+
+:Send email via Email Service\n(TODO: provider not selected);
+
+:Return 200\n{ message: "We have sent a link to confirm your email to ___email___" };
+
+stop
+
+@enduml

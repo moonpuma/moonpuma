@@ -11,6 +11,7 @@
 | [AUTH.md](AUTH.md)                     | Аутентификация: регистрация, вход, восстановление пароля, выход, OAuth (UC-1 … UC-5) со всеми основными и альтернативными сценариями |
 | [API/README.md](API/README.md)         | Рабочая инструкция по backend API для Codex: base URL, endpoint'ы, схемы запросов, статусы, cookies и auth-флоу                    |
 | [TANSTACK_QUERY.md](TANSTACK_QUERY.md) | Архитектура серверного состояния и правила размещения TanStack Query по FSD                                                          |
+| [forgot-password/](forgot-password/) | C4-диаграммы (уровни 1–4, PlantUML) для флоу восстановления пароля (UC-3) |
 
 ## Как пользоваться
 

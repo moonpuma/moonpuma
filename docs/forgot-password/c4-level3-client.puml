@@ -1,0 +1,56 @@
+@startuml
+
+title C4 Level 3 - Component Diagram (Client - Next.js)
+
+package "Auth pages (auth) route group" {
+
+  component "ForgotPasswordPage" as forgotPage {
+  }
+  note right of forgotPage
+    src/app/(auth)/forgot-password/page.tsx
+    Currently a stub — TODO: build the form
+  end note
+
+  component "Recaptcha" as recaptcha {
+  }
+  note right of recaptcha
+    src/shared/ui/recaptcha
+    Wraps react-google-recaptcha, theme dark
+    (built)
+  end note
+
+  component "EmailSentModal" as emailSentModal {
+  }
+  note right of emailSentModal
+    src/features/auth/email-sent-modal
+    "We have sent a link to confirm your email to ___" (built)
+  end note
+
+  component "ResendLinkPage" as resendLinkPage {
+  }
+  note right of resendLinkPage
+    src/app/(auth)/resend-link/page.tsx
+    Reused from UC-1 email verification (built)
+  end note
+
+  component "CreateNewPasswordPage" as newPasswordPage {
+  }
+  note right of newPasswordPage
+    src/app/(auth)/create-new-password
+    TODO: page doesn't exist yet
+  end note
+}
+
+actor "User" as user
+node "Auth Backend API\n[TODO]" as api
+
+user --> forgotPage : enters email
+forgotPage --> recaptcha : embeds
+forgotPage --> api : POST /forgot-password (TODO)
+forgotPage --> emailSentModal : shows on success
+api --> resendLinkPage : redirect on invalid/expired link
+resendLinkPage --> api : POST /resend-link (TODO)
+user --> newPasswordPage : opens link from email
+newPasswordPage --> api : POST /reset-password (TODO)
+
+@enduml

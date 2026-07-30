@@ -1,4 +1,15 @@
-// Заглушка. Позже здесь будет форма восстановления пароля.
+import type { Metadata } from 'next'
+import { ForgotPasswordForm } from '@/features/auth/forgot-password'
+import s from './page.module.scss'
+
+export const metadata: Metadata = {
+  title: 'Forgot Password',
+}
+
 export default function ForgotPasswordPage() {
-  return <h1>Восстановление пароля (Forgot Password)</h1>
+  return (
+    <main className={s.page}>
+      <ForgotPasswordForm />
+    </main>
+  )
 }
