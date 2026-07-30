@@ -2,7 +2,7 @@ import { Menu } from './Menu'
 import { Meta, StoryObj } from '@storybook/nextjs-vite'
 
 const meta: Meta<typeof Menu> = {
-  title: 'Components/Menu',
+  title: 'Widgets/Menu',
   component: Menu,
   parameters: {
     layout: 'centered',

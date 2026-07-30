@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import '@/app/globals.scss'
+import { QueryProvider } from '@/app/providers'
 
 const inter = Inter({
   subsets: ['latin', 'cyrillic'],
@@ -21,7 +22,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en' className={inter.variable}>
-      <body>{children}</body>
+      <body>
+        <QueryProvider>{children}</QueryProvider>
+      </body>
     </html>
   )
 }
