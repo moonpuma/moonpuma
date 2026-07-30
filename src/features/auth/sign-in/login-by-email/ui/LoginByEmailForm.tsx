@@ -38,8 +38,11 @@ export function LoginByEmailForm() {
 
   const onSubmit = async (data: LoginByEmailFormValues) => {
     try {
-      await loginMutation.mutateAsync(data)
-      router.push('/profile')
+        await loginMutation.mutateAsync({
+            ...data,
+            recaptchaValue: '',
+        })
+        router.push('/profile')
     } catch {
       setError('password', {
         message: loginErrorMessage,
