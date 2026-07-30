@@ -19,7 +19,7 @@ export interface EmailSentModalProps {
 
 export function EmailSentModal({ isOpen, onClose, email }: EmailSentModalProps) {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title='Email sent' footer={<Button title='OK' onClick={onClose} />}>
+    <Modal isOpen={isOpen} onClose={onClose} title='Email sent' footer={<Button onClick={onClose}>OK</Button>}>
       <Typography variant='regular_text_16'>We have sent a link to confirm your email to {email}</Typography>
     </Modal>
   )

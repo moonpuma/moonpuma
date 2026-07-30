@@ -1,26 +1,32 @@
 'use client'
 
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useMutation } from '@tanstack/react-query'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { Icon } from '@/shared/ui/icon'
 import { Input } from '@/shared/ui/input'
 import { Checkbox } from '@/shared/ui/checkbox'
 import { Button } from '@/shared/ui/button'
 import { Typography } from '@/shared/ui/typography'
 import { Card } from '@/shared/ui/cards'
+import { EmailSentModal } from '@/features/auth/email-sent-modal'
+import { registerUser, RegisterUserError } from '@/features/auth/register-user'
 import GoogleIcon from '@/shared/ui/icon/icons/social/google.svg'
 import GithubIcon from '@/shared/ui/icon/icons/social/github.svg'
 import { signUpSchema, type SignUpFormValues } from './signUpSchema'
 import s from './SignUpForm.module.scss'
 
 export function SignUpForm() {
-  const router = useRouter()
+  const [submittedEmail, setSubmittedEmail] = useState<string | null>(null)
 
   const {
     register,
     handleSubmit,
+    reset,
+    setError,
+    clearErrors,
     formState: { errors, isValid, isSubmitting },
   } = useForm<SignUpFormValues>({
     resolver: zodResolver(signUpSchema),
@@ -34,10 +40,46 @@ export function SignUpForm() {
     },
   })
 
-  const onSubmit = async (data: SignUpFormValues) => {
-    // TODO: заменить на реальный API-запрос через TanStack Query (UC-1, docs/AUTH.md)
-    console.log('Sign up data:', data)
-    router.push('/sign-in')
+  const registerMutation = useMutation({ mutationFn: registerUser })
+
+  const onSubmit = async (values: SignUpFormValues) => {
+    clearErrors('root.server')
+
+    const data = {
+      username: values.username,
+      email: values.email,
+      password: values.password,
+      passwordConfirmation: values.passwordConfirmation,
+    }
+
+    try {
+      await registerMutation.mutateAsync(data)
+      setSubmittedEmail(data.email)
+    } catch (error) {
+      if (error instanceof RegisterUserError && error.status === 409) {
+        const conflictField = getConflictField(error.payload)
+
+        if (conflictField === 'email') {
+          setError('email', { message: 'User with this email is already registered' }, { shouldFocus: true })
+          return
+        }
+
+        if (conflictField === 'username') {
+          setError('username', { message: 'User with this username is already registered' }, { shouldFocus: true })
+          return
+        }
+
+        setError('root.server', { message: 'User with this email or username is already registered' })
+        return
+      }
+
+      setError('root.server', { message: 'Unable to register. Please try again' })
+    }
+  }
+
+  const handleEmailSentClose = () => {
+    setSubmittedEmail(null)
+    reset()
   }
 
   const handleGoogleSignUp = () => {
@@ -114,8 +156,14 @@ export function SignUpForm() {
         </div>
 
         <Button type='submit' disabled={!isValid || isSubmitting} className={s.submitButton}>
-          Sign Up
+          {isSubmitting ? 'Signing Up...' : 'Sign Up'}
         </Button>
+
+        {errors.root?.server && (
+          <span className={s.formError} role='alert'>
+            {errors.root.server.message}
+          </span>
+        )}
       </form>
 
       {/* Ссылка на вход */}
@@ -125,6 +173,38 @@ export function SignUpForm() {
           Sign In
         </Typography>
       </div>
+
+      <EmailSentModal isOpen={submittedEmail !== null} onClose={handleEmailSentClose} email={submittedEmail ?? ''} />
     </Card>
   )
+}
+
+function getConflictField(payload: unknown): 'email' | 'username' | null {
+  const text = collectPayloadStrings(payload).join(' ').toLowerCase()
+
+  if (text.includes('email')) {
+    return 'email'
+  }
+
+  if (text.includes('username') || text.includes('user name')) {
+    return 'username'
+  }
+
+  return null
+}
+
+function collectPayloadStrings(payload: unknown): string[] {
+  if (typeof payload === 'string') {
+    return [payload]
+  }
+
+  if (Array.isArray(payload)) {
+    return payload.flatMap(collectPayloadStrings)
+  }
+
+  if (payload && typeof payload === 'object') {
+    return Object.values(payload).flatMap(collectPayloadStrings)
+  }
+
+  return []
 }
