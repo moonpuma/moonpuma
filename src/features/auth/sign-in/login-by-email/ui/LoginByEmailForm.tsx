@@ -2,8 +2,8 @@
 
 import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { Link, useRouter } from '@/shared/i18n/navigation'
+import { routes } from '@/shared/routing/routes'
 import { Icon } from '@/shared/ui/icon'
 import { Button } from '@/shared/ui/button'
 import { Card } from '@/shared/ui/cards'
@@ -38,11 +38,8 @@ export function LoginByEmailForm() {
 
   const onSubmit = async (data: LoginByEmailFormValues) => {
     try {
-        await loginMutation.mutateAsync({
-            ...data,
-            recaptchaValue: '',
-        })
-        router.push('/profile')
+      await loginMutation.mutateAsync(data)
+      router.push(routes.profile.root())
     } catch {
       setError('password', {
         message: loginErrorMessage,
@@ -87,7 +84,7 @@ export function LoginByEmailForm() {
             placeholder='******************'
           />
 
-          <Link href='/forgot-password' className={s.forgotPassword}>
+          <Link href={routes.auth.forgotPassword()} className={s.forgotPassword}>
             <Typography variant='regular_text_14'>Forgot Password</Typography>
           </Link>
 
@@ -103,7 +100,7 @@ export function LoginByEmailForm() {
 
       <div className={s.footer}>
         <Typography variant='regular_text_16'>Don&apos;t have an account?</Typography>
-        <Typography variant='regular_link' href='/sign-up'>
+        <Typography variant='regular_link' href={routes.auth.signUp()}>
           Sign Up
         </Typography>
       </div>

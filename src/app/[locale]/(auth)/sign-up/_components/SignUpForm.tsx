@@ -2,9 +2,9 @@
 
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { Icon } from '@/shared/ui/icon'
+import { Link, useRouter } from '@/shared/i18n/navigation'
+import { routes } from '@/shared/routing/routes'
 import { Input } from '@/shared/ui/input'
 import { Checkbox } from '@/shared/ui/checkbox'
 import { Button } from '@/shared/ui/button'
@@ -37,7 +37,7 @@ export function SignUpForm() {
   const onSubmit = async (data: SignUpFormValues) => {
     // TODO: заменить на реальный API-запрос через TanStack Query (UC-1, docs/AUTH.md)
     console.log('Sign up data:', data)
-    router.push('/sign-in')
+    router.push(routes.auth.signIn())
   }
 
   const handleGoogleSignUp = () => {
@@ -101,11 +101,11 @@ export function SignUpForm() {
             <Checkbox {...register('agree')} />
             <span className={s.agreementText}>
               I agree to the{' '}
-              <Link href='/terms-of-service' className={s.link}>
+              <Link href={routes.legal.termsOfService()} className={s.link}>
                 Terms of Service
               </Link>{' '}
               and{' '}
-              <Link href='/privacy-policy' className={s.link}>
+              <Link href={routes.legal.privacyPolicy()} className={s.link}>
                 Privacy Policy
               </Link>
             </span>
@@ -121,7 +121,7 @@ export function SignUpForm() {
       {/* Ссылка на вход */}
       <div className={s.footer}>
         <Typography variant='regular_text_16'>Do you have an account?</Typography>
-        <Typography variant='regular_link' href='/sign-in'>
+        <Typography variant='regular_link' href={routes.auth.signIn()}>
           Sign In
         </Typography>
       </div>
