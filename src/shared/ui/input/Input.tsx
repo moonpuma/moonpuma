@@ -7,7 +7,7 @@ import EyeIcon from '@/shared/ui/icon/icons/common/eye-outline.svg';
 import EyeOffIcon from '@/shared/ui/icon/icons/common/eye-off-outline.svg';
 import s from './Input.module.scss';
 
-interface InputProps extends Omit<ComponentPropsWithoutRef<'input'>, 'type'> {
+export interface InputProps extends Omit<ComponentPropsWithoutRef<'input'>, 'type'> {
     /** Подпись над полем. */
     label?: string;
     /** Тип поля. Для `password` вместе с `showPasswordToggle` появляется кнопка показа пароля. */
