@@ -33,7 +33,7 @@ export const signUpSchema = z
     }),
   })
   .refine((data) => data.password === data.passwordConfirmation, {
-    error: 'The passwords must match',
+    error: 'Passwords must match',
     path: ['passwordConfirmation'],
   })
 
