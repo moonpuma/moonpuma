@@ -1,1 +1,1 @@
-export { confirmEmail, ConfirmEmailError } from './api'
+export { confirmEmail } from './api'
