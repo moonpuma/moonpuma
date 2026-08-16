@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { SignInForm } from './_components/SignInForm'
+import { LoginByEmailForm } from '@/features/auth/sign-in/login-by-email'
 import s from './page.module.scss'
 
 export const metadata: Metadata = {
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function SignInPage() {
   return (
     <div className={s.page}>
-      <SignInForm />
+      <LoginByEmailForm />
     </div>
   )
 }
