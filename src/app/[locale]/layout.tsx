@@ -4,7 +4,7 @@ import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import '@/app/globals.scss'
-import { QueryProvider } from '@/app/providers'
+import { AuthProvider, QueryProvider } from '@/app/providers'
 import { routing } from '@/shared/i18n/routing'
 
 const inter = Inter({
@@ -43,7 +43,9 @@ export default async function RootLayout({
     <html lang={locale} className={inter.variable}>
       <body>
         <QueryProvider>
-          <NextIntlClientProvider>{children}</NextIntlClientProvider>
+          <NextIntlClientProvider>
+            <AuthProvider>{children}</AuthProvider>
+          </NextIntlClientProvider>
         </QueryProvider>
       </body>
     </html>

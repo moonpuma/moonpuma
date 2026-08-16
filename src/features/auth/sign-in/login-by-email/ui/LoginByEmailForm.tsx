@@ -2,6 +2,7 @@
 
 import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { GoogleAuthButton } from '@/features/auth/google-oauth'
 import { Link, useRouter } from '@/shared/i18n/navigation'
 import { routes } from '@/shared/routing/routes'
 import { Icon } from '@/shared/ui/icon'
@@ -9,7 +10,6 @@ import { Button } from '@/shared/ui/button'
 import { Card } from '@/shared/ui/cards'
 import { ControlledInput } from '@/shared/ui/controlled-input'
 import { Typography } from '@/shared/ui/typography'
-import GoogleIcon from '@/shared/ui/icon/icons/social/google.svg'
 import GithubIcon from '@/shared/ui/icon/icons/social/github.svg'
 import { useLoginByEmail } from '../api/use-login-by-email'
 import { loginByEmailSchema, type LoginByEmailFormValues } from '../model/schema'
@@ -47,11 +47,6 @@ export function LoginByEmailForm() {
     }
   }
 
-  const handleGoogleSignIn = () => {
-    // TODO: подключить OAuth через Google (docs/AUTH.md, UC-5).
-    console.log('Google sign in')
-  }
-
   const handleGithubSignIn = () => {
     // TODO: GitHub OAuth не реализуем без backend-контракта (docs/API/README.md).
     console.log('GitHub sign in')
@@ -64,9 +59,7 @@ export function LoginByEmailForm() {
       </Typography>
 
       <div className={s.oauthButtons}>
-        <button type='button' className={s.oauthBtn} onClick={handleGoogleSignIn} aria-label='Sign in with Google'>
-          <Icon icon={GoogleIcon} size={36} />
-        </button>
+        <GoogleAuthButton aria-label='Sign in with Google' />
         <button type='button' className={s.oauthBtn} onClick={handleGithubSignIn} aria-label='Sign in with GitHub'>
           <Icon icon={GithubIcon} size={36} color='var(--color-light-100)' />
         </button>

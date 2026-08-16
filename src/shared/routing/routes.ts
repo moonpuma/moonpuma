@@ -11,6 +11,9 @@ export const routes = {
     forgotPassword: () => '/forgot-password',
     resendLink: () => '/resend-link',
     success: () => '/success',
+    // redirect_uri для Google OAuth (UC-5) — подтверждён и передан бэкенду для регистрации
+    // в Google Console (dev: http://localhost:3000/google/callback).
+    googleCallback: () => '/google/callback',
   },
 
   legal: {

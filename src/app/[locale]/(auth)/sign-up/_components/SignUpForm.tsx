@@ -14,7 +14,7 @@ import { Typography } from '@/shared/ui/typography'
 import { Card } from '@/shared/ui/cards'
 import { EmailSentModal } from '@/features/auth/email-sent-modal'
 import { registerUser, RegisterUserError } from '@/features/auth/register-user'
-import GoogleIcon from '@/shared/ui/icon/icons/social/google.svg'
+import { GoogleAuthButton } from '@/features/auth/google-oauth'
 import GithubIcon from '@/shared/ui/icon/icons/social/github.svg'
 import { signUpSchema, type SignUpFormValues } from './signUpSchema'
 import s from './SignUpForm.module.scss'
@@ -83,11 +83,6 @@ export function SignUpForm() {
     reset()
   }
 
-  const handleGoogleSignUp = () => {
-    // TODO: подключить OAuth через Google (UC-5)
-    console.log('Google sign up')
-  }
-
   const handleGithubSignUp = () => {
     // TODO: подключить OAuth через GitHub (UC-5)
     console.log('GitHub sign up')
@@ -101,9 +96,7 @@ export function SignUpForm() {
 
       {/* OAuth-кнопки */}
       <div className={s.oauthButtons}>
-        <button type='button' className={s.oauthBtn} onClick={handleGoogleSignUp} aria-label='Sign up with Google'>
-          <Icon icon={GoogleIcon} size={36} />
-        </button>
+        <GoogleAuthButton aria-label='Sign up with Google' />
         <button type='button' className={s.oauthBtn} onClick={handleGithubSignUp} aria-label='Sign up with GitHub'>
           <Icon icon={GithubIcon} size={36} color='var(--color-light-100)' />
         </button>
