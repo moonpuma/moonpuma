@@ -1,35 +1,28 @@
 'use client'
 
 import { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import { Icon } from '@/shared/ui/icon'
 import { Link } from '@/shared/i18n/navigation'
 import { routes } from '@/shared/routing/routes'
-import { Input } from '@/shared/ui/input'
-import { Checkbox } from '@/shared/ui/checkbox'
+import { ControlledInput } from '@/shared/ui/controlled-input'
+import { ControlledCheckbox } from '@/shared/ui/controlled-checkbox'
 import { Button } from '@/shared/ui/button'
 import { Typography } from '@/shared/ui/typography'
 import { Card } from '@/shared/ui/cards'
 import { EmailSentModal } from '@/features/auth/email-sent-modal'
-import { registerUser, RegisterUserError } from '@/features/auth/register-user'
 import { GoogleAuthButton } from '@/features/auth/google-oauth'
 import GithubIcon from '@/shared/ui/icon/icons/social/github.svg'
-import { signUpSchema, type SignUpFormValues } from './signUpSchema'
+import { registerUser, RegisterUserError, getConflictField } from '../api/register-user'
+import { signUpSchema, type SignUpFormValues } from '../model/schema'
 import s from './SignUpForm.module.scss'
 
 export function SignUpForm() {
   const [submittedEmail, setSubmittedEmail] = useState<string | null>(null)
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    setError,
-    clearErrors,
-    formState: { errors, isValid, isSubmitting },
-  } = useForm<SignUpFormValues>({
+  const methods = useForm<SignUpFormValues>({
     resolver: zodResolver(signUpSchema),
     mode: 'onBlur',
     defaultValues: {
@@ -40,6 +33,14 @@ export function SignUpForm() {
       agree: false,
     },
   })
+
+  const {
+    handleSubmit,
+    reset,
+    setError,
+    clearErrors,
+    formState: { errors, isValid, isSubmitting },
+  } = methods
 
   const registerMutation = useMutation({ mutationFn: registerUser })
 
@@ -103,66 +104,60 @@ export function SignUpForm() {
       </div>
 
       {/* Форма */}
-      <form onSubmit={handleSubmit(onSubmit)} className={s.form} noValidate>
-        <Input label='Username' placeholder='Epam11' error={errors.username?.message} {...register('username')} />
+      <FormProvider {...methods}>
+        <form onSubmit={handleSubmit(onSubmit)} className={s.form} noValidate>
+          <ControlledInput name='username' label='Username' placeholder='Epam11' />
 
-        <Input
-          label='Email'
-          type='email'
-          placeholder='Epam@epam.com'
-          error={errors.email?.message}
-          {...register('email')}
-        />
+          <ControlledInput name='email' label='Email' type='email' placeholder='Epam@epam.com' />
 
-        <Input
-          label='Password'
-          type='password'
-          showPasswordToggle
-          placeholder='******************'
-          error={errors.password?.message}
-          {...register('password')}
-        />
+          <ControlledInput
+            name='password'
+            label='Password'
+            type='password'
+            showPasswordToggle
+            placeholder='******************'
+          />
 
-        <Input
-          label='Password confirmation'
-          type='password'
-          showPasswordToggle
-          placeholder='******************'
-          error={errors.passwordConfirmation?.message}
-          {...register('passwordConfirmation')}
-        />
+          <ControlledInput
+            name='passwordConfirmation'
+            label='Password confirmation'
+            type='password'
+            showPasswordToggle
+            placeholder='******************'
+          />
 
-        <div className={s.agreement}>
-          <div className={s.agreementRow}>
-            <Checkbox {...register('agree')} />
-            <span className={s.agreementText}>
-              I agree to the{' '}
-              <Link href={routes.legal.termsOfService()} className={s.link}>
-                Terms of Service
-              </Link>{' '}
-              and{' '}
-              <Link href={routes.legal.privacyPolicy()} className={s.link}>
-                Privacy Policy
-              </Link>
-            </span>
+          <div className={s.agreement}>
+            <div className={s.agreementRow}>
+              <ControlledCheckbox name='agree' />
+              <span className={s.agreementText}>
+                I agree to the{' '}
+                <Link href={routes.legal.termsOfService()} className={s.link}>
+                  Terms of Service
+                </Link>{' '}
+                and{' '}
+                <Link href={routes.legal.privacyPolicy()} className={s.link}>
+                  Privacy Policy
+                </Link>
+              </span>
+            </div>
+            {errors.agree && <span className={s.errorText}>{errors.agree.message}</span>}
           </div>
-          {errors.agree && <span className={s.errorText}>{errors.agree.message}</span>}
-        </div>
 
-        <Button
-          type='submit'
-          disabled={!isValid || isSubmitting || registerMutation.isPending}
-          className={s.submitButton}
-        >
-          {isSubmitting || registerMutation.isPending ? 'Signing Up...' : 'Sign Up'}
-        </Button>
+          <Button
+            type='submit'
+            disabled={!isValid || isSubmitting || registerMutation.isPending}
+            className={s.submitButton}
+          >
+            {isSubmitting || registerMutation.isPending ? 'Signing Up...' : 'Sign Up'}
+          </Button>
 
-        {errors.root?.server && (
-          <span className={s.formError} role='alert'>
-            {errors.root.server.message}
-          </span>
-        )}
-      </form>
+          {errors.root?.server && (
+            <span className={s.formError} role='alert'>
+              {errors.root.server.message}
+            </span>
+          )}
+        </form>
+      </FormProvider>
 
       {/* Ссылка на вход */}
       <div className={s.footer}>
@@ -175,34 +170,4 @@ export function SignUpForm() {
       <EmailSentModal isOpen={submittedEmail !== null} onClose={handleEmailSentClose} email={submittedEmail ?? ''} />
     </Card>
   )
-}
-
-function getConflictField(payload: unknown): 'email' | 'username' | null {
-  const text = collectPayloadStrings(payload).join(' ').toLowerCase()
-
-  if (text.includes('email')) {
-    return 'email'
-  }
-
-  if (text.includes('username') || text.includes('user name')) {
-    return 'username'
-  }
-
-  return null
-}
-
-function collectPayloadStrings(payload: unknown): string[] {
-  if (typeof payload === 'string') {
-    return [payload]
-  }
-
-  if (Array.isArray(payload)) {
-    return payload.flatMap(collectPayloadStrings)
-  }
-
-  if (payload && typeof payload === 'object') {
-    return Object.values(payload).flatMap(collectPayloadStrings)
-  }
-
-  return []
 }

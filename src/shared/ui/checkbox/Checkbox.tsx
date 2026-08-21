@@ -2,7 +2,7 @@ import { useId, type ComponentPropsWithoutRef } from 'react';
 import clsx from 'clsx';
 import s from './Checkbox.module.scss';
 
-interface CheckboxProps extends Omit<ComponentPropsWithoutRef<'input'>, 'type'> {
+export interface CheckboxProps extends Omit<ComponentPropsWithoutRef<'input'>, 'type'> {
     label?: string;
 }
 

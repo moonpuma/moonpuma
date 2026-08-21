@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { SignUpForm } from './_components/SignUpForm'
+import { SignUpForm } from '@/features/auth/sign-up'
 import s from './page.module.scss'
 
 export const metadata: Metadata = {
