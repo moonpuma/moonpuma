@@ -1,30 +1,37 @@
 'use client'
 
-import { isAxiosError } from 'axios'
-import { useRouter } from '@/shared/i18n/navigation'
-import { routes } from '@/shared/routing/routes'
+import { useState } from 'react'
+import { useLogoutRedirect } from '@/entities/auth/logout-redirect'
 import { Button } from '@/shared/ui/button'
 import { useLogoutAllSessions } from '../api'
+import s from './LogoutAllButton.module.scss'
 
 export function LogoutAllButton() {
-  const router = useRouter()
+  const [hasError, setHasError] = useState(false)
   const logoutAllMutation = useLogoutAllSessions()
+  const logoutAndRedirect = useLogoutRedirect(logoutAllMutation.mutateAsync)
 
   const handleClick = async () => {
+    setHasError(false)
+
     try {
-      await logoutAllMutation.mutateAsync()
-      router.push(routes.auth.signIn())
-    } catch (error) {
-      // 401 значит сессии уже нет на бэке — всё равно уводим на sign-in.
-      if (isAxiosError(error) && error.response?.status === 401) {
-        router.push(routes.auth.signIn())
-      }
+      await logoutAndRedirect()
+    } catch {
+      setHasError(true)
     }
   }
 
   return (
-    <Button variant='outlined' onClick={handleClick} disabled={logoutAllMutation.isPending}>
-      Log out of all devices
-    </Button>
+    <div className={s.wrapper}>
+      <Button variant='outlined' onClick={handleClick} disabled={logoutAllMutation.isPending}>
+        Log out of all devices
+      </Button>
+
+      {hasError && (
+        <span className={s.error} role='alert'>
+          Unable to log out of all devices. Please try again
+        </span>
+      )}
+    </div>
   )
 }

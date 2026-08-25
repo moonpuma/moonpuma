@@ -1,10 +1,10 @@
 import { httpClient } from '@/shared/api'
 
-export type LoginByEmailRequest = {
+export type SignInRequest = {
   email: string
   password: string
 }
 
-export const loginByEmail = async (body: LoginByEmailRequest) => {
+export const signIn = async (body: SignInRequest) => {
   await httpClient.post('/auth/login', body)
 }

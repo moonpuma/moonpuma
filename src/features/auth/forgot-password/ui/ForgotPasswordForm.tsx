@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { isAxiosError } from 'axios'
 import { Card } from '@/shared/ui/cards'
 import { Typography } from '@/shared/ui/typography'
 import { ControlledInput } from '@/shared/ui/controlled-input'
@@ -11,7 +10,8 @@ import { Button } from '@/shared/ui/button'
 import { Recaptcha } from '@/shared/ui/recaptcha'
 import { Link } from '@/shared/i18n/navigation'
 import { routes } from '@/shared/routing/routes'
-import { EmailSentModal } from '@/features/auth/email-sent-modal'
+import { getErrorStatus } from '@/shared/api'
+import { EmailSentModal } from '@/entities/auth/email-sent-modal'
 import { useRecoverPassword } from '../model/use-recover-password'
 import { forgotPasswordSchema, type ForgotPasswordFormValues } from '../model/schema'
 import s from './ForgotPasswordForm.module.scss'
@@ -42,10 +42,7 @@ export function ForgotPasswordForm() {
       setIsSent(true)
       setSentEmail(data.email)
     } catch (error) {
-      // 200 приходит независимо от того, существует ли email (см. docs/API/README.md,
-      // «Известные расхождения») — сюда попадаем только на реальную ошибку (400/429/сеть),
-      // а не на несуществующий email.
-      if (isAxiosError(error) && error.response?.status === 429) {
+      if (getErrorStatus(error) === 429) {
         setError('email', { message: 'Too many requests. Please try again later' })
         return
       }

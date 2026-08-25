@@ -1,7 +1,7 @@
 'use client'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { logoutAllSessions } from './logout-all-sessions'
+import { logoutAllSessions } from '../api/logout-all-sessions'
 
 export const useLogoutAllSessions = () => {
   const queryClient = useQueryClient()

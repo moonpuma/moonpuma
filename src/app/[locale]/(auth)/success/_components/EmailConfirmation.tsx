@@ -2,8 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 import Image from 'next/image'
-import { useMutation } from '@tanstack/react-query'
-import { confirmEmail } from '@/features/auth/confirm-email'
+import { useConfirmEmail } from '@/features/auth/confirm-email'
 import { Link, useRouter } from '@/shared/i18n/navigation'
 import { routes } from '@/shared/routing/routes'
 import { Button } from '@/shared/ui/button'
@@ -18,7 +17,7 @@ const uuidV4Regex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-
 export function EmailConfirmation({ code }: EmailConfirmationProps) {
   const router = useRouter()
   const confirmationStarted = useRef(false)
-  const { mutate, isSuccess } = useMutation({ mutationFn: confirmEmail })
+  const { mutate, isSuccess } = useConfirmEmail()
 
   useEffect(() => {
     if (confirmationStarted.current) {

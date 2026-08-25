@@ -1,12 +1,12 @@
 'use client'
 
 import clsx from 'clsx'
-import { isAxiosError } from 'axios'
 import { useState, type CSSProperties, type MouseEvent } from 'react'
 
 import { useLogoutCurrentSession } from '@/features/auth/logout-current-session'
+import { useLogoutRedirect } from '@/entities/auth/logout-redirect'
 import { Icon, type IconComponent } from '@/shared/ui/icon'
-import { Link, useRouter } from '@/shared/i18n/navigation'
+import { Link } from '@/shared/i18n/navigation'
 import { routes } from '@/shared/routing/routes'
 import { Modal } from '@/shared/ui/modal'
 import { Button } from '@/shared/ui/button'
@@ -142,9 +142,15 @@ export const Sidebar = ({
                             style,
                             onLogout,
                         }: SidebarProps) => {
-    const router = useRouter()
     const logoutMutation = useLogoutCurrentSession()
     const [isLogoutModalOpen, setLogoutModalOpen] = useState(false)
+    const logoutAndRedirect = useLogoutRedirect(logoutMutation.mutateAsync, {
+        signInHref,
+        onSettled: () => {
+            setLogoutModalOpen(false)
+            onLogout?.()
+        },
+    })
 
     const primary = items.filter((item) => primaryItems.some((primaryItem) => primaryItem.id === item.id))
     const secondary = items.filter((item) => secondaryItems.some((secondaryItem) => secondaryItem.id === item.id))
@@ -163,19 +169,9 @@ export const Sidebar = ({
 
     const confirmLogout = async () => {
         try {
-            await logoutMutation.mutateAsync()
-            setLogoutModalOpen(false)
-            onLogout?.()
-            router.push(signInHref)
-        } catch (error) {
-            // 401 значит сессия уже недействительна на бэке — всё равно уводим на sign-in.
-            if (isAxiosError(error) && error.response?.status === 401) {
-                setLogoutModalOpen(false)
-                onLogout?.()
-                router.push(signInHref)
-                return
-            }
-            // Прочие ошибки (сеть, 500 и т.д.) — оставляем модалку открытой,
+            await logoutAndRedirect()
+        } catch {
+            // Ошибка, отличная от 401 (сеть, 500 и т.д.) — оставляем модалку открытой,
             // пользователь может попробовать ещё раз или закрыть модалку сам.
         }
     }

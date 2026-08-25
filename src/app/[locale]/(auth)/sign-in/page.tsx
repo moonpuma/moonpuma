@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
-import { LoginByEmailForm } from '@/features/auth/sign-in/login-by-email'
+import { SignInForm } from '@/features/auth/sign-in'
+import { GoogleAuthButton } from '@/features/auth/google-oauth'
+import { GithubAuthButton } from '@/features/auth/github-oauth'
 import s from './page.module.scss'
 
 export const metadata: Metadata = {
@@ -9,7 +11,14 @@ export const metadata: Metadata = {
 export default function SignInPage() {
   return (
     <div className={s.page}>
-      <LoginByEmailForm />
+      <SignInForm
+        oauthButtons={
+          <>
+            <GoogleAuthButton aria-label='Sign in with Google' />
+            <GithubAuthButton aria-label='Sign in with GitHub' />
+          </>
+        }
+      />
     </div>
   )
 }

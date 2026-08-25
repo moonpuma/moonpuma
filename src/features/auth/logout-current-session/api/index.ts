@@ -1,2 +1,2 @@
-export { logoutCurrentSession } from './logoutCurrentSession'
-export { useLogoutCurrentSession } from './useLogoutCurrentSession'
+export { logoutCurrentSession } from './logout-current-session'
+export { useLogoutCurrentSession } from '../model/use-logout-current-session'

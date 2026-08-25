@@ -1,28 +1,33 @@
 'use client'
 
+import type { ReactNode } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { GoogleAuthButton } from '@/features/auth/google-oauth'
 import { Link, useRouter } from '@/shared/i18n/navigation'
 import { routes } from '@/shared/routing/routes'
-import { Icon } from '@/shared/ui/icon'
 import { Button } from '@/shared/ui/button'
 import { Card } from '@/shared/ui/cards'
 import { ControlledInput } from '@/shared/ui/controlled-input'
 import { Typography } from '@/shared/ui/typography'
-import GithubIcon from '@/shared/ui/icon/icons/social/github.svg'
-import { useLoginByEmail } from '../api/use-login-by-email'
-import { loginByEmailSchema, type LoginByEmailFormValues } from '../model/schema'
-import s from './LoginByEmailForm.module.scss'
+import { getErrorStatus } from '@/shared/api'
+import { useSignIn } from '../api'
+import { signInSchema, type SignInFormValues } from '../model/schema'
+import s from './SignInForm.module.scss'
 
-const loginErrorMessage = 'The email or password are incorrect. Try again please'
+const signInErrorMessage = 'The email or password are incorrect. Try again please'
+const tooManyAttemptsMessage = 'Too many attempts. Please try again later'
+const genericSignInErrorMessage = 'Something went wrong. Please try again'
 
-export function LoginByEmailForm() {
+export interface SignInFormProps {
+  oauthButtons?: ReactNode
+}
+
+export function SignInForm({ oauthButtons }: SignInFormProps) {
   const router = useRouter()
-  const loginMutation = useLoginByEmail()
+  const signInMutation = useSignIn()
 
-  const methods = useForm<LoginByEmailFormValues>({
-    resolver: zodResolver(loginByEmailSchema),
+  const methods = useForm<SignInFormValues>({
+    resolver: zodResolver(signInSchema),
     mode: 'onBlur',
     defaultValues: {
       email: '',
@@ -36,20 +41,25 @@ export function LoginByEmailForm() {
     formState: { isSubmitting, isValid },
   } = methods
 
-  const onSubmit = async (data: LoginByEmailFormValues) => {
+  const onSubmit = async (data: SignInFormValues) => {
     try {
-      await loginMutation.mutateAsync(data)
+      await signInMutation.mutateAsync(data)
       router.push(routes.profile.root())
-    } catch {
-      setError('password', {
-        message: loginErrorMessage,
-      })
-    }
-  }
+    } catch (error) {
+      const status = getErrorStatus(error)
 
-  const handleGithubSignIn = () => {
-    // TODO: GitHub OAuth не реализуем без backend-контракта (docs/API/README.md).
-    console.log('GitHub sign in')
+      if (status === 401) {
+        setError('password', { message: signInErrorMessage })
+        return
+      }
+
+      if (status === 403) {
+        setError('password', { message: tooManyAttemptsMessage })
+        return
+      }
+
+      setError('password', { message: genericSignInErrorMessage })
+    }
   }
 
   return (
@@ -58,12 +68,7 @@ export function LoginByEmailForm() {
         Sign In
       </Typography>
 
-      <div className={s.oauthButtons}>
-        <GoogleAuthButton aria-label='Sign in with Google' />
-        <button type='button' className={s.oauthBtn} onClick={handleGithubSignIn} aria-label='Sign in with GitHub'>
-          <Icon icon={GithubIcon} size={36} color='var(--color-light-100)' />
-        </button>
-      </div>
+      <div className={s.oauthButtons}>{oauthButtons}</div>
 
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)} className={s.form} noValidate>
@@ -83,7 +88,7 @@ export function LoginByEmailForm() {
 
           <Button
             type='submit'
-            disabled={!isValid || isSubmitting || loginMutation.isPending}
+            disabled={!isValid || isSubmitting || signInMutation.isPending}
             className={s.submitButton}
           >
             Sign In

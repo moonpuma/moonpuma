@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation'
 import '@/app/globals.scss'
 import { AuthProvider, QueryProvider } from '@/app/providers'
 import { routing } from '@/shared/i18n/routing'
+import { Toaster } from '@/shared/ui/toast'
 
 const inter = Inter({
   subsets: ['latin', 'cyrillic'],
@@ -45,6 +46,7 @@ export default async function RootLayout({
         <QueryProvider>
           <NextIntlClientProvider>
             <AuthProvider>{children}</AuthProvider>
+            <Toaster />
           </NextIntlClientProvider>
         </QueryProvider>
       </body>

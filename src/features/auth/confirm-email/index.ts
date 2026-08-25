@@ -1,1 +1,1 @@
-export { confirmEmail } from './api'
+export { useConfirmEmail } from './api'

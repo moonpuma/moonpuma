@@ -6,11 +6,16 @@ export const metadata: Metadata = {
 }
 
 interface GoogleCallbackPageProps {
-  searchParams: Promise<{ code?: string | string[] }>
+  searchParams: Promise<{ code?: string | string[]; error?: string | string[] }>
 }
 
 export default async function GoogleCallbackPage({ searchParams }: GoogleCallbackPageProps) {
-  const { code } = await searchParams
+  const { code, error } = await searchParams
 
-  return <GoogleCallback code={typeof code === 'string' ? code : undefined} />
+  return (
+    <GoogleCallback
+      code={typeof code === 'string' ? code : undefined}
+      error={typeof error === 'string' ? error : undefined}
+    />
+  )
 }
