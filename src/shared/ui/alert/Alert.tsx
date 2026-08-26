@@ -7,12 +7,13 @@ import s from './Alert.module.scss'
 interface AlertProps extends ComponentPropsWithoutRef<'div'> {
   message: string
   isError?: boolean
+  visible?: boolean
   onClose?: () => void
 }
 
-export const Alert = ({ message, isError = false, onClose, className = '', ...restProps }: AlertProps) => {
+export const Alert = ({ message, isError = false, visible = true, onClose, className = '', ...restProps }: AlertProps) => {
   const variantClassName = isError ? s.error : s.success
-  const combinedClassName = clsx(s.alertWrapper, variantClassName, className)
+  const combinedClassName = clsx(s.alertWrapper, variantClassName, !visible && s.exiting, className)
 
   return (
     <div className={combinedClassName} role='alert' {...restProps}>
