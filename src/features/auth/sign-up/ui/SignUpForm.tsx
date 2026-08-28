@@ -10,9 +10,9 @@ import { ControlledCheckbox } from '@/shared/ui/controlled-checkbox'
 import { Button } from '@/shared/ui/button'
 import { Typography } from '@/shared/ui/typography'
 import { Card } from '@/shared/ui/cards'
-import { getErrorStatus, getErrorPayload } from '@/shared/api'
+import { getErrorStatus, getErrorPayload, getConflictField } from '@/shared/api'
 import { EmailSentModal } from '@/entities/auth/email-sent-modal'
-import { useRegisterUser, getConflictField } from '../api'
+import { useRegisterUser } from '../api'
 import { signUpSchema, type SignUpFormValues } from '../model/schema'
 import s from './SignUpForm.module.scss'
 
@@ -60,7 +60,10 @@ export function SignUpForm({ oauthButtons }: SignUpFormProps) {
       setSubmittedEmail(data.email)
     } catch (error) {
       if (getErrorStatus(error) === 409) {
-        const conflictField = getConflictField(getErrorPayload(error))
+        const conflictField = getConflictField(getErrorPayload(error), {
+          email: ['email'],
+          username: ['username', 'user name'],
+        })
 
         if (conflictField === 'email') {
           setError('email', { message: 'User with this email is already registered' }, { shouldFocus: true })
