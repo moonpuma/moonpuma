@@ -6,7 +6,7 @@ import { useConfirmEmail } from '@/features/auth/confirm-email'
 import { Link, useRouter } from '@/shared/i18n/navigation'
 import { routes } from '@/shared/routing/routes'
 import { Button } from '@/shared/ui/button'
-import s from '../page.module.scss'
+import s from './page.module.scss'
 
 interface EmailConfirmationProps {
   code?: string
@@ -27,12 +27,12 @@ export function EmailConfirmation({ code }: EmailConfirmationProps) {
     confirmationStarted.current = true
 
     if (!code || !uuidV4Regex.test(code)) {
-      router.replace(routes.auth.resendLink())
+      router.replace(routes.auth.resendConfirmationLink())
       return
     }
 
     mutate(code, {
-      onError: () => router.replace(routes.auth.resendLink()),
+      onError: () => router.replace(routes.auth.resendConfirmationLink()),
     })
   }, [code, mutate, router])
 
