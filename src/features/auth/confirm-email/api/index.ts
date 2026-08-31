@@ -1,1 +1,2 @@
-export { confirmEmail, ConfirmEmailError } from './confirmEmail'
+export { confirmEmail } from './confirmEmail'
+export { useConfirmEmail } from '../model/use-confirm-email'

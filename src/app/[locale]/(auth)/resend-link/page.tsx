@@ -1,23 +1,36 @@
-'use client'
-
+import type { Metadata } from 'next'
 import Image from 'next/image'
+import { setRequestLocale } from 'next-intl/server'
+import { Link } from '@/shared/i18n/navigation'
+import { routes } from '@/shared/routing/routes'
 import { Button } from '@/shared/ui/button'
-import { Input } from '@/shared/ui/input'
 import s from './page.module.scss'
 
-// Экран повторной отправки ссылки подтверждения email (UC-1, альт. сценарий №3:
-// истекло время перехода по ссылке из письма). Логика пока не реализована
-export default function ResendLinkPage() {
+export const metadata: Metadata = {
+  title: 'Password recovery',
+}
+
+interface ResendLinkPageProps {
+  params: Promise<{ locale: string }>
+}
+
+// UC-3, альт. сценарий №2: ссылка восстановления пароля истекла/невалидна. Отдельного
+// backend-endpoint под "переотправить ссылку" нет (docs/API/README.md), а email пользователя
+// на этом шаге неизвестен — recovery-код в /create-new-password непрозрачен, поэтому кнопка
+// ведёт обратно на /forgot-password, где повторная отправка уже реализована.
+export default async function ResendLinkPage({ params }: ResendLinkPageProps) {
+  const { locale } = await params
+  setRequestLocale(locale)
+
   return (
     <div className={s.container}>
       <h1 className={s.title}>Email verification link expired</h1>
       <p className={s.description}>
         Looks like the verification link has expired. Not to worry, we can send the link again
       </p>
-      <div className={s.form}>
-        <Input type='email' label='Email' placeholder='Epam@epam.com' />
-        <Button title='Resend verification link' className={s.button} />
-      </div>
+      <Button asChild className={s.button}>
+        <Link href={routes.auth.forgotPassword()}>Resend link</Link>
+      </Button>
       <Image
         className={s.image}
         src='/images/rafiki.svg'

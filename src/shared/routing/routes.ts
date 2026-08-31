@@ -9,8 +9,21 @@ export const routes = {
     signIn: () => '/sign-in',
     signUp: () => '/sign-up',
     forgotPassword: () => '/forgot-password',
+    // код восстановления из письма (UC-3, шаги 8-9) передаётся тем же query-параметром `code`,
+    // что и подтверждение email (`GET /auth/confirm?code=...`) — backend для recovery-ссылки
+    // отдельно формат не зафиксировал (docs/API/README.md, POST /auth/change-password), но так
+    // сохраняется единообразие с уже задокументированным confirm-флоу.
+    createNewPassword: () => '/create-new-password',
     resendLink: () => '/resend-link',
-    success: () => '/success',
+    // отдельно от resendLink (UC-3, восстановление пароля): UC-1 переотправляет ссылку
+    // подтверждения email и оформлена как страница флоу Sign Up (см. дизайн).
+    resendConfirmationLink: () => '/resend-confirmation-link',
+    // страница-приёмник ссылки из письма (`GET /auth/confirm?code=...`, UC-1, шаги 8-9):
+    // пока идёт запрос — статус "Confirming your email...", по итогу — "Congratulations!".
+    confirmEmail: () => '/confirm-email',
+    // redirect_uri для Google OAuth (UC-5) — подтверждён и передан бэкенду для регистрации
+    // в Google Console (dev: http://localhost:3000/google/callback).
+    googleCallback: () => '/google/callback',
   },
 
   legal: {
