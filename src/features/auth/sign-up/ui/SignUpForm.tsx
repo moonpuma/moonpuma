@@ -25,7 +25,7 @@ export function SignUpForm({ oauthButtons }: SignUpFormProps) {
 
   const methods = useForm<SignUpFormValues>({
     resolver: zodResolver(signUpSchema),
-    mode: 'onBlur',
+    mode: 'onChange',
     defaultValues: {
       username: '',
       email: '',

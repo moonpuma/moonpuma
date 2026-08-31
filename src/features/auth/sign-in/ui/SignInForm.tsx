@@ -28,7 +28,7 @@ export function SignInForm({ oauthButtons }: SignInFormProps) {
 
   const methods = useForm<SignInFormValues>({
     resolver: zodResolver(signInSchema),
-    mode: 'onBlur',
+    mode: 'onChange',
     defaultValues: {
       email: '',
       password: '',
