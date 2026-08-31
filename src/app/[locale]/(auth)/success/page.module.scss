@@ -1,0 +1,38 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 480px;
+  text-align: center;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 36px;
+  color: var(--text-primary);
+}
+
+.description {
+  margin-top: 18px;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--text-primary);
+}
+
+.status {
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--text-primary);
+}
+
+.button {
+  margin-top: 36px;
+}
+
+.image {
+  margin-top: 72px;
+  max-width: 100%;
+  height: auto;
+}

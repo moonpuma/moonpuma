@@ -1,8 +1,10 @@
 'use client'
 
-import { useState } from 'react'
 import clsx from 'clsx'
-import Link from 'next/link'
+import { useLocale } from 'next-intl'
+import { Link, usePathname, useRouter } from '@/shared/i18n/navigation'
+import { routing } from '@/shared/i18n/routing'
+import { routes } from '@/shared/routing/routes'
 import s from './Header.module.scss'
 import { Icon } from '@/shared/ui/icon'
 import { Button } from '@/shared/ui/button'
@@ -16,38 +18,38 @@ import ruFlagIcon from '@/shared/ui/icon/icons/locale/flag-russia.svg'
 interface HeaderProps {
   isLoggedIn?: boolean
   className?: string
-  onLoginClick?: () => void
-  onSignupClick?: () => void
 }
+
+type Locale = (typeof routing.locales)[number]
+
+const isLocale = (value: string): value is Locale => (routing.locales as readonly string[]).includes(value)
 
 const languageOptions: SelectOption[] = [
   { value: 'en', label: 'English', icon: ukFlagIcon },
   { value: 'ru', label: 'Русский', icon: ruFlagIcon },
 ]
 
-export const Header = ({
-  isLoggedIn = false,
-  className,
-  onLoginClick = () => {},
-  onSignupClick = () => {},
-}: HeaderProps) => {
-  const [lang, setLang] = useState<'en' | 'ru'>('en')
+export const Header = ({ isLoggedIn = false, className }: HeaderProps) => {
+  const locale = useLocale()
+  const pathname = usePathname()
+  const router = useRouter()
 
   const handleLanguageChange = (value: string) => {
-    setLang(value as 'en' | 'ru')
+    if (!isLocale(value) || value === locale) return
+    router.push(pathname, { locale: value })
   }
 
   return (
     <header className={clsx(s.headerWrapper, className)}>
       <div className={s.headerContainer}>
-        <Link href='/' className={s.logoLink}>
+        <Link href={routes.home()} className={s.logoLink}>
           <Typography variant='h1' className={s.logo}>
             Inctagram
           </Typography>
         </Link>
 
         <div className={s.actionsBlock}>
-          <Select options={languageOptions} value={lang} onChange={handleLanguageChange} />
+          <Select options={languageOptions} value={locale} onChange={handleLanguageChange} />
 
           {isLoggedIn ? (
             <button className={s.bellButton} aria-label='Notifications'>
@@ -56,11 +58,11 @@ export const Header = ({
             </button>
           ) : (
             <>
-              <Button variant='outlined' onClick={onLoginClick} className={s.loginBtn}>
-                Log in
+              <Button asChild variant='outlined' className={s.loginBtn}>
+                <Link href={routes.auth.signIn()}>Log in</Link>
               </Button>
-              <Button variant='filled' onClick={onSignupClick} className={s.signupBtn}>
-                Sign up
+              <Button asChild variant='filled' className={s.signupBtn}>
+                <Link href={routes.auth.signUp()}>Sign up</Link>
               </Button>
             </>
           )}

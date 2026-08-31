@@ -1,0 +1,21 @@
+@startuml
+
+' ============================================
+' C4 Level 1 - System Context Diagram
+' ============================================
+
+title C4 Level 1 - System Context
+
+actor "User" as user
+
+rectangle "Moonpuma Web App" as system {
+}
+
+rectangle "Email Service\n[TODO: provider not selected]" as email
+rectangle "Google reCAPTCHA\n[verification widget]" as recaptcha
+
+user --> system : requests password reset, sets new password
+system --> email : sends recovery link
+system --> recaptcha : verifies "I'm not a robot"
+
+@enduml
