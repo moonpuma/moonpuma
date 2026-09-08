@@ -10,7 +10,9 @@ import { Button } from '@/shared/ui/button'
 import { Recaptcha } from '@/shared/ui/recaptcha'
 import { Link } from '@/shared/i18n/navigation'
 import { routes } from '@/shared/routing/routes'
-import { EmailSentModal } from '@/features/auth/email-sent-modal'
+import { getErrorStatus } from '@/shared/api'
+import { EmailSentModal } from '@/entities/auth/email-sent-modal'
+import { useRecoverPassword } from '../model/use-recover-password'
 import { forgotPasswordSchema, type ForgotPasswordFormValues } from '../model/schema'
 import s from './ForgotPasswordForm.module.scss'
 
@@ -32,16 +34,20 @@ export function ForgotPasswordForm() {
 
   const canSubmit = isSent || (isValid && Boolean(recaptchaToken))
 
+  const recoverPasswordMutation = useRecoverPassword()
+
   const onSubmit = async (data: ForgotPasswordFormValues) => {
     try {
-      // TODO: заменить на реальный API-запрос через TanStack Query
-      console.log('Forgot password data:', data)
+      await recoverPasswordMutation.mutateAsync(data.email)
       setIsSent(true)
       setSentEmail(data.email)
-    } catch {
-      setError('email', {
-        message: "User with this email doesn't exist",
-      })
+    } catch (error) {
+      if (getErrorStatus(error) === 429) {
+        setError('email', { message: 'Too many requests. Please try again later' })
+        return
+      }
+
+      setError('email', { message: 'Something went wrong. Please try again' })
     }
   }
 

@@ -7,6 +7,10 @@
   border-radius: 2px;
   padding: 0 16px;
   box-sizing: border-box;
+  opacity: 1;
+  transition:
+    opacity 150ms ease,
+    transform 150ms ease;
 
   // success — успех (зелёный)
   &.success {
@@ -18,6 +22,16 @@
   &.error {
     border: 1px solid var(--status-danger);
     background-color: var(--status-danger-bg);
+  }
+
+  // exiting — тост уже помечен как dismissed (например, клик по крестику), но ещё не
+  // удалён react-hot-toast'ом (задержка ~1с на анимацию выхода, см. TOAST_EXPIRE_DISMISS_DELAY).
+  // Без этого класса тост остаётся полностью непрозрачным и выглядит "зависшим" — pointer-events
+  // на обёртке react-hot-toast уже выключен, но пользователь не видит, что закрытие сработало,
+  // и повторные клики по нему молча игнорируются.
+  &.exiting {
+    opacity: 0;
+    transform: translateX(8px);
   }
 }
 
